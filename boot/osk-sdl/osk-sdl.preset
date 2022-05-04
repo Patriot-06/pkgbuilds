@@ -1,0 +1,7 @@
+# mkinitcpio preset file for the 'initsquared' package
+
+source /etc/mkinitcpio.d/linux.preset
+
+default_config="/etc/mkinitcpio-osk-sdl.conf"
+default_image="/boot/initramfs-osk-sdl.img"
+#default_options=""
