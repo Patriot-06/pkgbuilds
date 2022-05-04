@@ -1,0 +1,90 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# The license above applies ONLY to this PKGBUILD and its included files and NOT unl0kr.
+_mode=host
+pkgname=unl0kr
+pkgver=2.0.2.r0.g2e5707c
+pkgrel=1
+_arches=all
+arch=(
+    x86_64
+    armv7h
+    aarch64
+)
+license=(GPL3)
+depends=(
+    device-mapper
+    cryptsetup
+    libinput
+    libinih
+    libxkbcommon
+    mesa
+    systemd
+)
+provides=(unl0kr)
+conflicts=(osk-sdl)
+makedepends=(
+    linux-headers
+    meson
+    scdoc
+)
+_commit=2e5707cbd5d8d9ab1b382f663e57804e1fb063ef
+_commit_lvgl=2f294aa76c8fece98a4fa72304bc6f267ed2a228
+_commit_lv_drivers=7e3135bcae37cbd03c2f003fcc96278671bd8632
+_commit_squeek2lvgl=b67685dfede0771d2a237e1d8d4e784fcf406a70
+
+pkgdesc="Framebuffer-based disk unlocker for the initramfs based on LVGL"
+
+source=(
+    "git+https://gitlab.com/cherrypicker/unl0kr.git#commit=${_commit}"
+    "git+https://github.com/lvgl/lvgl.git#commit=${_commit_lvgl}"
+    "git+https://github.com/calebccff/lv_drivers.git#commit=${_commit_lv_drivers}"
+    "git+https://gitlab.com/cherrypicker/squeek2lvgl.git#commit=${_commit_squeek2lvgl}"
+    unl0kr-hooks
+    unl0kr-install
+    50-unl0kr.conf
+)
+
+sha256sums=(
+    SKIP
+    SKIP
+    SKIP
+    SKIP
+    bed28e5bc358fcc33b815a10dc374c902d565701dfa808bb0fb012822d7072fa
+    9c3b583f2ad219ec2584cdc60ef44af468ab04e58bdb0af13f4bbafce29f10f2
+    8db97ef8f2a8b18a11394f00654c95a5daf035ede3e9f80bf2b3e7dd2a6c9138
+)
+
+pkgver() {
+    cd "$srcdir"/unl0kr
+    git describe --long --tags --abbrev=7 "$_commit" | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
+}
+
+prepare() {
+    cd "$srcdir"/unl0kr
+    mkdir -p lvgl lv_drivers squeek2lvgl
+    mv "$srcdir"/lvgl/* lvgl
+    mv "$srcdir"/lv_drivers/* lv_drivers
+    mv "$srcdir"/squeek2lvgl/* squeek2lvgl
+}
+
+build() {
+    cd "$srcdir"/unl0kr
+    arch-meson build
+    meson compile -C build
+}
+
+package() {
+    cd "$srcdir"/unl0kr
+    DESTDIR="$pkgdir" meson install --no-rebuild -C build
+
+    # Install initramfs
+    install -Dm644 ${srcdir}/unl0kr-hooks ${pkgdir}/usr/lib/initcpio/hooks/unl0kr
+    install -Dm644 ${srcdir}/unl0kr-install ${pkgdir}/usr/lib/initcpio/install/unl0kr
+    install -Dm644 "$srcdir"/50-unl0kr.conf "$pkgdir"/etc/kupfer/mkinitcpio.conf.d/50-unl0kr.conf
+
+    install -Dm644 "$srcdir"/unl0kr/unl0kr.conf "$pkgdir"/etc/unl0kr.conf
+
+    # Added due to pmOS including it. Function is currently undocumented, but it is required
+    touch dummy
+    install -Dm644 dummy "$pkgdir"/etc/unlokr.conf.d/dummy
+}

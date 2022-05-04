@@ -1,0 +1,73 @@
+#!/usr/bin/ash
+
+# Original by: Danct12 <danct12@disroot.org>
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+source /usr/lib/initcpio/hooks/kupfer-functions.sh
+
+run_hook() {
+	export rwopt=rw
+	export init=/sbin/init
+
+	eval "$(cat /etc/kupfer/deviceinfo)"
+	deviceinfo_partitions_microsd="$deviceinfo_partitions_microsd"
+	deviceinfo_partitions_data="$deviceinfo_partitions_data"
+
+	for _cryptroot in "$deviceinfo_partitions_microsd" "$deviceinfo_partitions_data" "/dev/disk/by-label/kupfer_cryptroot" ; do
+		if [ -e "$_cryptroot" ] && scan_partitions "$_cryptroot" "LABEL=kupfer_cryptroot"; then
+			echo "exporting cryptroot='$RESULT'!"
+			export cryptroot="$RESULT"
+			unset RESULT
+			break
+		fi
+	done
+
+	# Fall back to scanning for partitions
+
+	if [ -z "$cryptroot" ]; then
+		echo -n "kupfer_cryptroot not found as a raw partition"
+		[ -z "$deviceinfo_partitions_microsd" ] || echo -n " nor in data partition '$deviceinfo_partitions_microsd'"
+		[ -z "$deviceinfo_partitions_data" ] || echo -n " nor in data partition '$deviceinfo_partitions_data'"
+		echo -e ".\nScanning more partitions..."
+
+		for cryptpart in /dev/sd?[0-9]* /dev/mmcblk[0-9]p* /dev/nvme[0-9]n[0-9]p* /dev/vd?[0-9]* /dev/hd?[0-9]* ; do
+			! scan_partitions "$cryptpart" "LABEL=kupfer_cryptroot" || break
+		done
+
+		echo "exporting cryptroot='$RESULT'! (bruteforce)"
+		export cryptroot="$RESULT"
+		unset RESULT
+	fi
+
+	if [ -z "$cryptroot" ]; then
+		echo "Failed to find a partition labeled kupfer_cryptroot. Skipping..."
+		unset cryptroot
+		return 0
+	else
+		echo "Found kupfer_cryptroot at: $cryptroot"
+	fi
+	mapper_name="cryptroot"
+	mapper_path="/dev/mapper/${mapper_name}"
+	if cryptsetup isLuks "$cryptroot"; then
+		echo "Device is encrypted, using unl0kr."
+		until (cryptsetup status "$mapper_name" | grep -qw active) || [ -e "$mapper_path" ]; do
+			sleep 0.5
+			if [ -e "$mapper_path" ] ; then
+				echo "mapper $mapper_path already exists"
+				break
+			fi
+			echo "starting unl0kr"
+			(unl0kr | cryptsetup --perf-no_read_workqueue --perf-no_write_workqueue open "$cryptroot" "$mapper_name" - && echo "unl0kr success") || echo "unl0kr failed: $?"
+			sleep 0.5
+		done
+		export root="$mapper_path"
+	else
+		echo "$cryptroot is not encrypted. Skipping..."
+	fi
+
+	if (echo "$cryptroot" | grep -q '^/dev/loop'); then
+		export SUBPARTNUMBER="$(echo "$cryptroot" | grep -Eo '[0-9]+$')"
+		export LOOPDEV="${cryptroot%%p$_subpartnumber}"
+	fi
+	unset cryptroot
+}
