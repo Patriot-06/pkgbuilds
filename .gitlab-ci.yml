@@ -31,6 +31,15 @@ check_formatting:
   script:
     - script -e --log-out "$LOGFILE" -c 'kupferbootstrap packages check all'
 
+shellcheck:
+  image: koalaman/shellcheck-alpine:latest
+  stage: check
+  before_script:
+    - "true" # suppress default script
+  script:
+    - cd "$GIT_CLONE_PATH"
+    - find . -name PKGBUILD -exec shellcheck {} +
+
 .build:
   stage: build
   only: &build_only
