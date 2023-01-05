@@ -5,7 +5,7 @@ pkgname=(
     boot-lk2nd-msm8974-git
     boot-lk2nd-msm8226-git
 )
-pkgver=r5870.6961b9fc
+pkgver=r5870.6961b9fc1
 pkgrel=1
 _arches=specific
 arch=(aarch64)
