@@ -27,7 +27,7 @@ run_hook() {
 
   unset RESULT
 
-  for part in /dev/sd*[0-9] ; do
+  for part in /dev/sd*[0-9] /dev/mmcblk[0-9]p* /dev/nvme[0-9]n[0-9]p* /dev/vd?[0-9]* /dev/hd?[0-9]* ; do
     ! scan_partitions "$part" "LABEL=kupfer_root" || break
   done
 
