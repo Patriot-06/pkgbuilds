@@ -9,7 +9,15 @@ run_hook() {
 	set -e # Abort on error
 	unset LOOPDEV
 
-	for part in /dev/sd?[0-9]* ; do
+	eval "$(cat /etc/kupfer/deviceinfo)"
+	deviceinfo_partitions_microsd="$deviceinfo_partitions_microsd"
+	deviceinfo_partitions_data="$deviceinfo_partitions_data"
+
+	for part in "$deviceinfo_partitions_microsd" "$deviceinfo_partitions_data" /dev/sd?[0-9]* /dev/mmcblk[0-9]p* /dev/nvme[0-9]n[0-9]p* /dev/vd?[0-9]* /dev/hd?[0-9]* ; do
+		if [ ! -n "$part" ]; then
+			continue
+		fi
+
 		! scan_partitions "$part" "LABEL=kupfer_boot" || break
 	done
 
