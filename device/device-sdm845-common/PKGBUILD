@@ -47,7 +47,7 @@ package() {
     install -Dm644 "$srcdir"/sdm845.txt "$pkgdir"/etc/kupfer/systemd/sdm845.txt
 
     install -Dm755 "$srcdir"/callaudio-idle-workaround.service "$pkgdir"/usr/lib/systemd/user/callaudio-idle-workaround.service
-    install -Dm755 "$srcdir"/callaudio-idle-workaround.service "$pkgdir"/usr/lib/systemd/user-preset/99-callaudio-idle-workaround.preset
+    install -Dm755 "$srcdir"/callaudio-idle-workaround.preset "$pkgdir"/usr/lib/systemd/user-preset/99-callaudio-idle-workaround.preset
 
     # taken from pmos:
     install -Dm755 "$srcdir"/call_audio_idle_suspend_workaround.sh "$pkgdir"/usr/bin/callaudio-idle-workaround
