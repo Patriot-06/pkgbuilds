@@ -12,7 +12,7 @@ license=(MIT)
 depends=(mkbootimg-git)
 install=android-bootimg-updater.install
 source=(
-    91-linux.hook
+    91-android-bootimg-updater.hook
     update-bootimg.sh
 )
 sha256sums=(
@@ -21,6 +21,6 @@ sha256sums=(
 )
 
 package() {
-    install -Dm644 "$srcdir"/91-linux.hook "${pkgdir}/usr/share/libalpm/hooks/91-${pkgname}.hook"
+    install -Dm644 "$srcdir"/91-android-bootimg-updater.hook "${pkgdir}/usr/share/libalpm/hooks/91-android-bootimg-updater.hook"
     install -Dm755 "$srcdir"/update-bootimg.sh "$pkgdir"/usr/bin/update-bootimg
 }
