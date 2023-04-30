@@ -2,14 +2,13 @@ _mode=cross
 _nodeps=true
 pkgname=initsquared
 pkgver=0.1
-pkgrel=1
+pkgrel=2
 _arches=specific
 arch=(any)
 license=(GPL-3.0-or-later)
 depends=(
     mkinitcpio-kupfer-hooks
 )
-install=initsquared.install
 
 pkgdesc="Init shim hook to bootstrap a secondary initramfs"
 
@@ -18,14 +17,14 @@ source=(
     initsquared-install
     initsquared.preset
     mkinitcpio-initsquared.conf
-    initsquared.install
+    91-initsquared.hook
 )
 sha256sums=(
     314cd7b07aa43e1b83b94db7c5e52694a893b14aa8f5c3f825c092edebc1ce29
     d5f43bf430b1dc7f27f31c1c6c019534d1d8455ccd351494fb1d390d9362cd41
     f827b705d358d9300934bd551e64ee1f6073ea54da9252001800bb9873abdc98
     7d1b7e0b41237259b265b2f86869ca2ba63f91717fd90a2c79ab58956f5849c3
-    0c81a939e7fa4c94bca2a1a2951e4bef352e88fb15375b1c4026bcb3b2027055
+    ce9b4d3ab9367c2378a13857b923cca0ba73f57f14cf6d783b0a48842b9c36f5
 )
 
 package() {
@@ -33,5 +32,5 @@ package() {
     install -Dm644 "$srcdir"/initsquared-install "$pkgdir"/usr/lib/initcpio/install/initsquared
     install -Dm644 "$srcdir"/initsquared.preset "$pkgdir"/etc/mkinitcpio.d/initsquared.preset
     install -Dm644 "$srcdir"/mkinitcpio-initsquared.conf "$pkgdir"/etc/mkinitcpio-initsquared.conf
+    install -Dm644 "$srcdir"/91-initsquared.hook "${pkgdir}/usr/share/libalpm/hooks/91-initsquared.hook"
 }
-
