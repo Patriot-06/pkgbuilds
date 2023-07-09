@@ -17,7 +17,7 @@ source=(
     initsquared-install
     initsquared.preset
     mkinitcpio-initsquared.conf
-    91-initsquared.hook
+    50-initsquared.hook
 )
 sha256sums=(
     314cd7b07aa43e1b83b94db7c5e52694a893b14aa8f5c3f825c092edebc1ce29
@@ -32,5 +32,5 @@ package() {
     install -Dm644 "$srcdir"/initsquared-install "$pkgdir"/usr/lib/initcpio/install/initsquared
     install -Dm644 "$srcdir"/initsquared.preset "$pkgdir"/etc/mkinitcpio.d/initsquared.preset
     install -Dm644 "$srcdir"/mkinitcpio-initsquared.conf "$pkgdir"/etc/mkinitcpio-initsquared.conf
-    install -Dm644 "$srcdir"/91-initsquared.hook "${pkgdir}/usr/share/libalpm/hooks/91-initsquared.hook"
+    install -Dm644 "$srcdir"/50-initsquared.hook "${pkgdir}/usr/share/libalpm/hooks/50-initsquared.hook"
 }
