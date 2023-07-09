@@ -45,4 +45,12 @@ run_hook() {
     echo "Failed to find a partition labeled kupfer_root."
     unset root
   fi
+
+  unset SUBPARTNUMBER
+  unset LOOPDEV
+
+  if [ "$(echo $root | grep /dev/loop)" ]; then
+    export SUBPARTNUMBER="$(echo $root | grep -Eo '[0-9]+$')"
+    export LOOPDEV="${root%%p$_subpartnumber}"
+  fi
 }
