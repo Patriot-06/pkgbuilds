@@ -5,7 +5,7 @@
 _mode=host
 pkgname=osk-sdl
 pkgver=0.67.1.r0.g41f67e2
-pkgrel=2
+pkgrel=3
 _arches=all
 arch=(
     x86_64
@@ -41,7 +41,7 @@ source=(
 sha256sums=(
     SKIP
     04c7c1ed9d923d663c3aaf9bfc4638c58f70ff2c78c8a267ec9167a8c62af96b
-    e747c9979e502e7077e1a2ea4d65c838faf13af4ac73e59a21a197244b5451c2
+    8abc3dad58572f6d695d6934bd491ee8e296e718922df8825e7732e5cbbf1229
     07a473bdf1989fb4ad2ed6b708df1ec1c0a88653c67689b7a0c22d392aee0604
     073d90f115ba33100b7124f969c32b7849b1fa268818d24801752dc906cbae9c
 )
