@@ -24,7 +24,7 @@ run_hook() {
 
 	# Fall back to scanning for partitions
 
-	if [ -z $cryptroot ]; then
+	if [ -z "$cryptroot" ]; then
 		echo -n "kupfer_cryptroot not found as a raw partition"
 		[ -z "$deviceinfo_partitions_microsd" ] || echo -n " nor in data partition '$deviceinfo_partitions_microsd'"
 		[ -z "$deviceinfo_partitions_data" ] || echo -n " nor in data partition '$deviceinfo_partitions_data'"
@@ -46,21 +46,28 @@ run_hook() {
 	else
 		echo "Found kupfer_cryptroot at: $cryptroot"
 	fi
-
+	mapper_name="cryptroot"
+	mapper_path="/dev/mapper/${mapper_name}"
 	if cryptsetup isLuks "$cryptroot"; then
-		echo "Device is encrypted, starting osk-sdl."
-		until cryptsetup status cryptroot | grep -qw active; do
-			osk-sdl -G -d $cryptroot -n cryptroot -c /etc/osk.conf
+		echo "Device is encrypted, using osk-sdl."
+		until (cryptsetup status "$mapper_name" | grep -qw active) || [ -e "$mapper_path" ]; do
+			sleep 0.5
+			if [ -e "$mapper_path" ] ; then
+				echo "mapper $mapper_path already exists"
+				break
+			fi
+			echo "starting osk-sdl"
+			(osk-sdl -G -d "$cryptroot" -n "$mapper_name" -c /etc/osk.conf && echo "osk-sdl success") || echo "osk-sdl failed: $?"
+			sleep 0.5
 		done
-		export root="/dev/mapper/cryptroot"
+		export root="$mapper_path"
 	else
-		echo "kupfer_cryptroot is not encrypted. Skipping..."
+		echo "$cryptroot is not encrypted. Skipping..."
 	fi
 
-	if [ "$(echo $cryptroot | grep /dev/loop)" ]; then
-		export SUBPARTNUMBER="$(echo $cryptroot | grep -Eo '[0-9]+$')"
+	if (echo "$cryptroot" | grep -q '^/dev/loop'); then
+		export SUBPARTNUMBER="$(echo "$cryptroot" | grep -Eo '[0-9]+$')"
 		export LOOPDEV="${cryptroot%%p$_subpartnumber}"
 	fi
-
 	unset cryptroot
 }
