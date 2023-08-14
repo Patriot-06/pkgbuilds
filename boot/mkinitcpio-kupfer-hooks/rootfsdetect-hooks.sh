@@ -12,6 +12,11 @@ run_hook() {
   deviceinfo_partitions_microsd="$deviceinfo_partitions_microsd"
   deviceinfo_partitions_data="$deviceinfo_partitions_data"
 
+  if [ $root = "/dev/mapper/cryptroot" ]; then
+    echo "rootfsdetect found root=/dev/mapper/cryptroot. Skipping..."
+    return 0
+  fi
+
   for _root in "$root" "$deviceinfo_partitions_microsd" "$deviceinfo_partitions_data" "/dev/disk/by-label/kupfer_root"; do
     if [ -e "$_root" ] && scan_partitions "$_root" "LABEL=kupfer_root"; then
       echo "Found kupfer_root at: $RESULT"
