@@ -3,7 +3,7 @@ _nodeps=true
 pkgname=mkinitcpio-kupfer-hooks
 pkgdesc="Kupfer-specific hooks to aide in device booting"
 pkgver=0.2
-pkgrel=1
+pkgrel=3
 _arches=specific
 arch=(any)
 license=(GPL3)
@@ -23,18 +23,20 @@ source=(
     firmwaresearchpath-hooks.sh
     firmwaresearchpath-install.sh
     kupfer-functions.sh
+    51-rootfs.conf
 )
 sha256sums=(
-    c85cd5366de8493f8508e8f599b870a7c255266fb0eb10ec6ddbcfdeeb4c0223
+    f6aeb7a0571f796f19482d3e1b3fbc13ae9a43221176c80cfb9bd0e3ecfc3e94
     fa966823232e3af7f7da50c8f542a945f8c42f78dddef9db22098ca288a10966
     9c4cf2ae50562c49e2beb33ab6029f60ad0012fb3eaf12b13cca1e46872839d9
     09ca660b3905eab9b7bda46b6201e56a5b320fe54aa432421d9abde65f86303b
     db93d6f37af2b1cbd9b71b9b225112adec62f811d358182d953f6d8042e83247
-    0a09f87b0382d0ac6f4969ffce171b1c3bcf9c644a6f2df1bd518414c11698c0
+    eff9c52be713bbb5ff700def7809c028f796b7331b5f088161b84971ba4a4cac
     ba69a3df3dc55158bcdbc553042939f81793ead3086452ab7d93b37f0ce8becf
     7d8c5477627a04e0706539f83adf710b7e00f859b84a27a6ae05ff85ed17f1e6
     aa39559c187dd3aac392481b5a6d57c34ca08196d00ac32e1f5f9013a93681a1
     806a858088266bd43af8a72225dce04e1a28474d71cb0cf725730e1edfea17cd
+    ebf30b0fd54fd0b558514b20792140f556bbb489c46d6b5b38ad801f3228ee5b
 )
 
 package() {
@@ -48,4 +50,5 @@ package() {
     install -Dm755 "$srcdir"/firmwaresearchpath-hooks.sh "$pkgdir"/usr/lib/initcpio/hooks/firmwaresearchpath
     install -Dm755 "$srcdir"/firmwaresearchpath-install.sh "$pkgdir"/usr/lib/initcpio/install/firmwaresearchpath
     install -Dm755 "$srcdir"/kupfer-functions.sh "$pkgdir"/usr/lib/initcpio/hooks/kupfer-functions.sh
+    install -Dm644 "$srcdir"/51-rootfs.conf "$pkgdir"/etc/kupfer/mkinitcpio.conf.d/51-rootfs.conf
 }
