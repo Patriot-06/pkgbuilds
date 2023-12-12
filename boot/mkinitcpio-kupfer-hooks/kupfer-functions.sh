@@ -87,3 +87,12 @@ scan_partitions()
 
 	return 1
 }
+
+# $1 is the partition that you want to detect loop device and subpartition number
+get_loopdev_partinfo()
+{
+	if [ "$(echo $1 | grep /dev/loop)" ]; then
+		export SUBPARTNUMBER="$(echo $1 | grep -Eo '[0-9]+$')"
+		export LOOPDEV="${1%%p$SUBPARTNUMBER}"
+	fi
+}
