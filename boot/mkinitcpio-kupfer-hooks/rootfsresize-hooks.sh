@@ -7,6 +7,9 @@ run_hook() {
     return 1
   fi
 
+  # Sets $LOOPDEV and $SUBPARTNUMBER
+  get_loopdev_partinfo $root
+
   # Check if root is inside of a nested partition table and fall over to resizing fs if not
   if [ -n $LOOPDEV ] && [ -n $SUBPARTNUMBER ] ; then
     if parted -s "$LOOPDEV" print free | tail -n2 | head -n1 | grep -qi "free space"; then

@@ -48,9 +48,4 @@ run_hook() {
 
   unset SUBPARTNUMBER
   unset LOOPDEV
-
-  if [ "$(echo $root | grep /dev/loop)" ]; then
-    export SUBPARTNUMBER="$(echo $root | grep -Eo '[0-9]+$')"
-    export LOOPDEV="${root%%p$_subpartnumber}"
-  fi
 }
