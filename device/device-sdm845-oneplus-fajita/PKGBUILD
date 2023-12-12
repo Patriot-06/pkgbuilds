@@ -1,32 +1,36 @@
 _mode=cross
 _nodeps=true
 pkgname=device-sdm845-oneplus-fajita
-pkgver=0.4
+pkgver=0.5
 pkgrel=1
 _arches=specific
 arch=(aarch64)
 license=(MIT)
 depends=(device-sdm845-oneplus-common)
 
-_commit=ba6c4be06030a41e12cdeef382f6bc9949608150
+_commit=caf2b5fec52e3c9b2b5aa195aa9fd6f7e251ecf7
 source=(
     machine-info
     https://gitlab.com/postmarketOS/pmaports/-/raw/${_commit}/device/community/device-oneplus-fajita/deviceinfo
     https://gitlab.com/postmarketOS/pmaports/-/raw/${_commit}/device/community/device-oneplus-fajita/q6voiced.conf
+    https://gitlab.com/postmarketOS/pmaports/-/raw/${_commit}/device/community/device-oneplus-fajita/10-unl0kr.conf
 )
 sha256sums=(
     7729d6a89258b470cadd48cfbc704bab7791501c53f45f50737dea6b441a3171
-    19fcac7422d2effa311fd84ea327fa23dd7e3fbfbe76891b82d21a9b85379a15
+    f3171266cbdf64f23578cdceb224fac27cb89b5b53ca652332d7ecfc3f9a48b2
     960805dca70f7173c6e8b86e14ccb4297c23924b9c593ecd9cf4c933785f4942
+    180a3e0eefa8260d1400775746bd40ec2c5b80d0401fc7115caca91ba92ae519
 )
 
 package() {
     install -Dm644 "$srcdir"/machine-info "$pkgdir"/etc/machine-info
     install -Dm644 "$srcdir"/q6voiced.conf "$pkgdir"/etc/conf.d/q6voiced
+    install -Dm644 "$srcdir"/10-unl0kr.conf "$pkgdir"/etc/unl0kr.conf.d/10-unl0kr.conf
     cp "$srcdir"/deviceinfo "$srcdir"/deviceinfo_
     cat >>"$srcdir"/deviceinfo_ <<EOF
 
 deviceinfo_partitions_data="/dev/sda17"
+deviceinfo_modules_initfs="i2c_qcom_geni rmi_core rmi_i2c qcom_spmi_haptics"
 EOF
     install -Dm644 "$srcdir"/deviceinfo_ "$pkgdir"/etc/kupfer/deviceinfo
 }
