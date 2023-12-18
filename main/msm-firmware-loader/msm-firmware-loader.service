@@ -6,7 +6,7 @@ Requires=msm-firmware-loader-unpack.service
 [Service]
 Type=oneshot
 ExecStart=/usr/bin/msm-firmware-loader.sh
-ExecStart=/usr/bin/remoteproc-reloader.sh
+ExecStart=/usr/bin/remoteproc-reloader.sh start
 
 [Install]
 WantedBy=default.target
