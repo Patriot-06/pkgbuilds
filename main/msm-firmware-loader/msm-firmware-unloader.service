@@ -1,0 +1,11 @@
+[Unit]
+Description=MSM Firmware Deactivator
+
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+ExecStart=/usr/bin/remoteproc-reloader.sh stop
+
+[Install]
+WantedBy=multi-user.target
