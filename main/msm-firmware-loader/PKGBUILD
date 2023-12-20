@@ -52,12 +52,3 @@ package() {
     # Set MTU=1380 to avoid ssh session hangups on huge transmissions
     install -Dm755 "$srcdir/10-network.rules" "$pkgdir/etc/udev/rules.d/10-network.rules"
 }
-
-# wcnss() {
-# 	pkgdesc="Use WiFi/BT firmware from stock firmware partition using $pkgname"
-# 	provides="firmware-qcom-msm8916-wcnss=$pkgver-r$pkgrel"
-# 	depends="$pkgname"
-# 
-# 	# empty package, just some magic
-# 	mkdir -p "$subpkgdir"
-# }
