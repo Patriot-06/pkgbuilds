@@ -12,41 +12,43 @@ license=(MIT)
 install=$pkgname.install
 
 source=(
-	https://gitlab.com/postmarketOS/msm-firmware-loader/-/archive/$pkgver/msm-firmware-loader-$pkgver.tar.gz
-	msm-firmware-loader.service
-	msm-firmware-loader-unpack.service
-	remoteproc-reloader.sh
-	wifi-powersave.conf
-	10-network.rules
+    https://gitlab.com/postmarketOS/msm-firmware-loader/-/archive/$pkgver/msm-firmware-loader-$pkgver.tar.gz
+    msm-firmware-loader.service
+    msm-firmware-loader-unpack.service
+    remoteproc-reloader.sh
+    wifi-powersave.conf
+    10-network.rules
 )
 sha256sums=(
-	SKIP
-	SKIP
-	SKIP
-	SKIP
-	SKIP
-	SKIP
+    SKIP
+    SKIP
+    SKIP
+    SKIP
+    SKIP
+    SKIP
 )
 
 package() {
     mkdir -p "$pkgdir"
-
+    
     install -Dm755 msm-firmware-loader.service \
         "$pkgdir/etc/systemd/system/msm-firmware-loader.service"
     install -Dm755 msm-firmware-loader-unpack.service \
         "$pkgdir/etc/systemd/system/msm-firmware-loader-unpack.service"
-
+    
     # Create mountpoint for the scripts
     mkdir -p "$pkgdir/usr/lib/firmware/msm-firmware-loader"
-
+    
     install -Dm755 "$srcdir/msm-firmware-loader-$pkgver/msm-firmware-loader.sh" \
         "$pkgdir/usr/bin/msm-firmware-loader.sh"
     install -Dm755 "$srcdir/msm-firmware-loader-$pkgver/msm-firmware-loader-unpack.sh" \
         "$pkgdir/usr/bin/msm-firmware-loader-unpack.sh"
     install -Dm755 "$srcdir/remoteproc-reloader.sh" "$pkgdir/usr/bin/remoteproc-reloader.sh"
+    
     # Turn off Wi-Fi powersave to improve wlan connection latency (200ms avg vs 2ms avg on local network)
     # https://gist.github.com/jcberthon/ea8cfe278998968ba7c5a95344bc8b55
     install -Dm755 "$srcdir/wifi-powersave.conf" "$pkgdir/etc/NetworkManager/conf.d/wifi-powersave.conf"
+    
     # Set MTU=1380 to avoid ssh session hangups on huge transmissions
     install -Dm755 "$srcdir/10-network.rules" "$pkgdir/etc/udev/rules.d/10-network.rules"
 }
