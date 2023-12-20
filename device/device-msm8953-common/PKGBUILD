@@ -27,11 +27,12 @@ source=(
     "https://gitlab.com/postmarketOS/pmaports/-/raw/${_pmos_commit}/device/community/soc-qcom-msm8953/q6voiced.conf"
     "git+https://github.com/msm8953-mainline/alsa-ucm-conf.git/#commit=$_ucm_commit"
 )
-sha256sums=(SKIP
-            SKIP
-            SKIP
-            SKIP
-            )
+sha256sums=(
+    SKIP
+    SKIP
+    SKIP
+    SKIP
+)
 
 package() {
     install -Dm644 "$srcdir"/msm8953-common.conf "$pkgdir"/etc/kupfer/mkinitcpio.conf.d/msm8953-common.conf

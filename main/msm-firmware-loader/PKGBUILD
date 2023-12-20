@@ -19,14 +19,14 @@ source=(
 	wifi-powersave.conf
 	10-network.rules
 )
-
-sha256sums=(SKIP
-            SKIP
-            SKIP
-            SKIP
-            SKIP
-            SKIP
-            )
+sha256sums=(
+	SKIP
+	SKIP
+	SKIP
+	SKIP
+	SKIP
+	SKIP
+)
 
 package() {
 	mkdir -p "$pkgdir"

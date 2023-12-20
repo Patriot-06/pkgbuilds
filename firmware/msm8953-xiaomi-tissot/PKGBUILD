@@ -18,7 +18,9 @@ source=(
 # default pmos gpu blobs from tissot repo are bullshit and don't work
 # mido gpu blobs are used instead
 
-sha256sums=(SKIP)
+sha256sums=(
+    SKIP
+)
 _fwdir="/usr/lib/firmware"
 
 build() {

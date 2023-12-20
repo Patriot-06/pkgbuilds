@@ -20,11 +20,12 @@ source=(
     xiaomi-mido.conf
     machine-info
 )
-sha256sums=(SKIP
-            SKIP
-            SKIP
-            SKIP
-            )
+sha256sums=(
+    SKIP
+    SKIP
+    SKIP
+    SKIP
+)
 
 package() {
     cp "$srcdir"/deviceinfo "$srcdir"/deviceinfo_

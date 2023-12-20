@@ -10,7 +10,9 @@ options=(!strip)
 source=(
     "git+https://github.com/Kiciuk/proprietary_firmware_mido"
 )
-sha256sums=(SKIP)
+sha256sums=(
+    SKIP
+)
 _fwdir="/usr/lib/firmware/kupfer"
 
 build() {

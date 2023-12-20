@@ -8,13 +8,13 @@ pkgrel=1
 _arches=specific
 arch=(aarch64)
 license=(MIT)
+url=https://github.com/msm8953-mainline/lk2nd
 provides=(boot-lk2nd)
 makedepends=(
     python
     dtc
     arm-none-eabi-gcc
 )
-url=https://github.com/msm8953-mainline/lk2nd
 _commit=2e745a2c03eb04677bf8031862fa18569bcab401
 source=("git+$url#commit=$_commit")
 sha256sums=(SKIP)
