@@ -2,7 +2,6 @@ _mode=cross
 pkgname=firmware-msm8953-xiaomi-tissot
 pkgver=0.1
 pkgrel=1
-pkgdesc="Firmware files for Xiaomi Mi A1"
 _arches=specific
 arch=(aarch64)
 license=(custom:Proprietary)
@@ -21,6 +20,7 @@ source=(
 sha256sums=(
     SKIP
 )
+pkgdesc="Firmware files for Xiaomi Mi A1"
 _fwdir="/usr/lib/firmware"
 
 build() {
