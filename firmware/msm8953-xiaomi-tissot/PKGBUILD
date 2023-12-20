@@ -20,7 +20,6 @@ source=(
 sha256sums=(
     SKIP
 )
-pkgdesc="Firmware files for Xiaomi Mi A1"
 _fwdir="/usr/lib/firmware"
 
 build() {
