@@ -184,7 +184,7 @@ push_packages:
     - (cd /kupfer/packages && git remote set-url origin git@gitlab.com:kupfer/packages/prebuilts.git)
   script:
     - *build_script
-    - (git push || git push) # try pushing twice since pushing occasionally fails 
+    - (git push || git push) # try pushing twice since pushing occasionally fails
 
 
 trigger_website_rebuild:
