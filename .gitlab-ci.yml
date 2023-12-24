@@ -39,12 +39,16 @@ default:
 
 check_formatting:
   stage: check
+  tags:
+    - docker
   script:
     - script -e --log-out "$LOGFILE" -c 'kupferbootstrap packages check all'
     - script -e --log-out "$LOGFILE" -a -c '(cd /kupfer/pkgbuilds && ./.gitlab/check_modified.sh)'
 
 .build:
   stage: build
+  tags:
+    - docker
   only: &build_only
     refs:
       - branches
