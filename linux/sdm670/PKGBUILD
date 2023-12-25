@@ -1,13 +1,13 @@
 _mode=cross
-_kernelname=sdm845
+_kernelname=sdm670
 pkgbase="linux-$_kernelname"
-_desc="Qualcomm SDM845 kernel"
+_desc="Qualcomm SDM670 kernel"
 pkgver=6.6.3
 pkgrel=1
 _arches=specific
 arch=(aarch64)
 license=(GPL2)
-url=https://gitlab.com/sdm845-mainline/linux
+url=https://gitlab.com/sdm670-mainline/linux
 makedepends=(
     xmlto
     docbook-xsl
@@ -18,7 +18,7 @@ makedepends=(
     cpio
 )
 options=(!strip)
-_commit=b26a64f3de381af1a589f20d88d3757acb1785a4
+_commit=d480f5e9e022a4eef746e894b9fa1cc712244987
 source=(
     "linux-${_commit}.tar.gz::${url}/-/archive/${_commit}.tar.gz"
     extra_config
@@ -27,7 +27,7 @@ source=(
     90-linux.hook
 )
 sha256sums=(
-    d2c1a8456a1cb47b310d1d7b8ed2d7b8ccbb8a5c5902e5ec20888c682b9a49bc
+    25184554ce649cd2179b5c6ac6dec72691868440e0d5e282f7ed5d10a0cbd447
     770324694413ee2491d2987586cba072cfc0e62d0a520d267bbd66acafedaa61
     66644820faa950a5fc59181f5aefcbed6d7ed652b29aee69979a2be2a032025d
     ae2e95db94ef7176207c690224169594d49445e04249d2499e9d2fbc117a0b21
@@ -44,8 +44,8 @@ pkgver() {
 prepare() {
     cd ${_srcname}
 
-    make defconfig sdm845.config
-    cat ../extra_config >>.config
+    make defconfig sdm845.config sdm670.config
+    cat ../extra_config >> .config
     make olddefconfig
 
     # don't run depmod on "make install". We'll do this ourselves in packaging
@@ -80,10 +80,8 @@ _package() {
     mkdir -p "${pkgdir}"/{boot,usr/lib/modules}
     make INSTALL_MOD_PATH="${pkgdir}/usr" modules_install
     mkdir -p "${pkgdir}/boot/dtbs/qcom"
-    cp arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-tianma.dtb \
-        arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-ebbg.dtb \
-        arch/arm64/boot/dts/qcom/sdm845-oneplus-enchilada.dtb \
-        arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dtb \
+    cp arch/arm64/boot/dts/qcom/sdm670-google-sargo.dtb \
+        arch/arm64/boot/dts/qcom/sdm670-google-bonito-sdc.dtb \
         "${pkgdir}/boot/dtbs/qcom"
     cp arch/$KARCH/boot/Image.gz "${pkgdir}/boot"
 
