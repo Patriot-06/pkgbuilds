@@ -13,6 +13,7 @@ depends=(
     firmware-msm8953-xiaomi-tissot
     msm-firmware-loader
     qbootctl
+    q6voiced
 )
 source=(
     "https://gitlab.com/postmarketOS/pmaports/-/raw/${_commit}/device/community/device-xiaomi-tissot/deviceinfo"
