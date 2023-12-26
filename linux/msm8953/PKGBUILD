@@ -18,14 +18,14 @@ makedepends=(
     cpio
 )
 options=(!strip)
-_commit=634db669f343239b63af0b522f94481166ff9685
+_commit=e7797492485f14684f5575f82800d09508df2034
 source=(
     "linux-${_commit}.tar.gz::${url}/archive/${_commit}.tar.gz"
     extra_config
     linux.preset
     60-linux.hook
     90-linux.hook
-    config-postmarketos-qcom-msm8953.aarch64
+    config-msm8953-ipa.aarch64
 )
 sha256sums=(
     SKIP
@@ -46,14 +46,10 @@ pkgver() {
 
 prepare() {
     cd ${_srcname}
-
-    
-#     make defconfig msm8953.config no-unused-drivers.config
-    cp "$srcdir/config-postmarketos-qcom-msm8953.aarch64" .config
-    # 11.12.2023
+    #make defconfig msm8953.config no-unused-drivers.config xiaomi-tissot.config
+    cp "$srcdir/config-msm8953-ipa.aarch64" .config
     cat ../extra_config >>.config
     make olddefconfig
-
     # don't run depmod on "make install". We'll do this ourselves in packaging
     sed -i "2iexit 0" scripts/depmod.sh
 }
