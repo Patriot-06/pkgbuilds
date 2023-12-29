@@ -54,6 +54,6 @@ package() {
 
   install -Dm755 "$srcdir"/q6voiced/q6voiced "$pkgdir"/usr/bin/q6voiced
   install -Dm644 "$srcdir"/q6voiced.service "$pkgdir"/usr/lib/systemd/user/q6voiced.service
-  systemctl --global enable q6voiced.service
+  #systemctl --global enable q6voiced.service
 
 }
