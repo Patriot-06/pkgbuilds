@@ -26,8 +26,10 @@ source=(
     "https://gitlab.com/postmarketOS/pmaports/-/raw/${_pmos_commit}/device/community/soc-qcom-msm8953/90-feedbackd-pm8xxx-vib.rules"
     "https://gitlab.com/postmarketOS/pmaports/-/raw/${_pmos_commit}/device/community/soc-qcom-msm8953/q6voiced.conf"
     "git+https://github.com/msm8953-mainline/alsa-ucm-conf.git/#commit=$_ucm_commit"
+    51-custom.lua
 )
 sha256sums=(
+    SKIP
     SKIP
     SKIP
     SKIP
@@ -49,4 +51,9 @@ package() {
     install -vDm 644 LICENSE -t "$pkgdir/usr/share/licenses/$pkgname"
     install -vDm 644 README.md -t "$pkgdir/usr/share/doc/$pkgname"
     install -vDm 644 ucm2/README.md -t "$pkgdir/usr/share/doc/$pkgname/ucm2"
+
+    # pipewire low volume and crackling fix
+    # taken from here: https://gitlab.freedesktop.org/pipewire/pipewire/-/issues/3193
+    install -Dm644 "$srcdir"/51-custom.lua "$pkgdir"/usr/share/wireplumber/main.lua.d/51-custom.lua
+
 }

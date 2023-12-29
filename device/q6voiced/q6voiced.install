@@ -1,0 +1,4 @@
+post_install() {
+    user=$(cut -d: -f1,3 /etc/passwd | grep -E ':[0-9]{4}$' | cut -d: -f1)
+    sudo systemctl --user -M $user@ enable q6voiced --now
+}

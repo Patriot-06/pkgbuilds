@@ -56,4 +56,3 @@ package() {
   install -Dm644 "$srcdir"/q6voiced.service "$pkgdir"/usr/lib/systemd/user/q6voiced.service
 
 }
-
