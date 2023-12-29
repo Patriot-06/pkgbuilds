@@ -22,12 +22,12 @@ source=(
     10-network.rules
 )
 sha256sums=(
-    SKIP
-    SKIP
-    SKIP
-    SKIP
-    SKIP
-    SKIP
+    68969f6411d96194a323f00b28d2dd4053360e284cea04d26a9b06ea4c311fb4
+    7c1060b76ed612a4300a496c12df773f9a775425a368c007fabaabcefe80d18f
+    b40cedb81a3e0cde46eefe7a43e4b79c12ed5f68591ff2e09e5458f26ad2c6d7
+    cfae5490913165dd1a2ee44c874514700d001e6e808ce067aa56c7f92fabeb55
+    8919a1f7a8ab8c8a11c89e6046fe9141bab1a21cb3dcd7add7bca22248a8b564
+    1ad2e717f8ade93c9c4e3b45b9a34f8cdee600e3436b256e8c540119a6f99fb1
 )
 
 package() {

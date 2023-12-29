@@ -8,6 +8,7 @@ arch=(aarch64)
 license=(GPL2)
 url=https://gitlab.com/postmarketOS/q6voiced
 _commit=736138bfc9f7b455a96679e2d67fd922a8f16464
+install=$pkgname.install
 
 depends=(
     systemd

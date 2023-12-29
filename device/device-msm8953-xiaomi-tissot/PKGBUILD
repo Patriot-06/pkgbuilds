@@ -1,6 +1,7 @@
 _mode=cross
 _nodeps=true
 pkgname=device-msm8953-xiaomi-tissot
+pkgdesc="Xiaomi Mi A1"
 pkgver=0.6
 pkgrel=2
 _arches=specific
@@ -22,10 +23,10 @@ source=(
     machine-info
 )
 sha256sums=(
-    SKIP
-    SKIP
-    SKIP
-    SKIP
+    08c2fe2b79129e5557b28ef42a8ad4e484b1febf8a79af447a9178155639ef0e
+    dcb8a11719721fe36ca14ac96ee8925cd8cdaba48d1dd357d8e6ddcd3ef0b79e
+    e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    7729d6a89258b470cadd48cfbc704bab7791501c53f45f50737dea6b441a3171
 )
 
 package() {
