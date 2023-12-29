@@ -29,11 +29,11 @@ source=(
     51-custom.lua
 )
 sha256sums=(
+    93624e7a003659b9af9cc4bf2c8f3b027ff3cb74af11f820ade88ef53415cab6
+    5ad4650f48fab20e4d93dfde00687e10048a0e426a745ede313168f02e31367c
+    21b8395e7729c785c0446be5d88e52873b0fa46812111b91bcd5c3af7dde24da
     SKIP
-    SKIP
-    SKIP
-    SKIP
-    SKIP
+    5e19f243756046ef88e33155f398dcaf637bf67914d18122040ce7ae604c284f
 )
 
 package() {
