@@ -12,11 +12,11 @@ arch=(
 )
 license=(GPL-3.0-or-later)
 depends=(
-  kcmutils
-  plasma-workspace
-  kdeclarative
-  ki18n
-  kirigami-addons
+    kcmutils
+    plasma-workspace
+    kdeclarative
+    ki18n
+    kirigami-addons
 )
 makedepends=(
     cmake
