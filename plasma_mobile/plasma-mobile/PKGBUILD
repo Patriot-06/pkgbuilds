@@ -2,8 +2,8 @@
 _mode=host
 pkgname=plasma-mobile
 pkgdesc="Plasma Mobile shell components."
-pkgver=5.27.4.r0.g1bc2d8c
-pkgrel=2
+pkgver=6.0.1.r0.g6e4e5fc
+pkgrel=1
 _arches=all
 arch=(
     aarch64
@@ -16,11 +16,10 @@ depends=(
     plasma-nm
     plasma-pa
     powerdevil
-    modemmanager-qt5
-    plasma-wayland-session
+    bluez-qt
+    modemmanager-qt
     qqc2-breeze-style
-    qt5-feedback
-    kirigami-addons5
+    kirigami-addons
     maliit-keyboard
     kpipewire
 )
@@ -33,7 +32,7 @@ makedepends=(
     cmake
     extra-cmake-modules
 )
-_commit=1bc2d8c20309992df627935e2305bcce16c8e2d4
+_commit=6e4e5fc341e3b1e4f9e1044e97d0d60d609d1c49
 source=(
     "git+https://invent.kde.org/plasma/plasma-mobile.git#commit=$_commit"
     plasma-mobile.service
