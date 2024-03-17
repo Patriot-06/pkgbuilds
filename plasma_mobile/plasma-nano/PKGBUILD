@@ -34,7 +34,7 @@ prepare() {
 }
 
 build() {
-    cmake -B build -S "${pkgname}-${pkgver}" \
+    cmake -B build -S "${pkgname}" \
         -DCMAKE_INSTALL_PREFIX=/usr \
         -DBUILD_TESTING=OFF \
         -DLIB_INSTALL_DIR=lib \
