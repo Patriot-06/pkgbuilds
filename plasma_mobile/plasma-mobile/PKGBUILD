@@ -2,7 +2,7 @@
 _mode=host
 pkgname=plasma-mobile
 pkgdesc="Plasma Mobile shell components."
-pkgver=6.0.1.r0.g6e4e5fc
+pkgver=6.0.2.r0.g505757a
 pkgrel=1
 _arches=all
 arch=(
@@ -22,9 +22,9 @@ depends=(
     kirigami-addons
     maliit-keyboard
     kpipewire
+    plasma-settings
 )
 optdepends=(
-    "plasma-settings: Settings application for Plasma Mobile"
     "plasma-dialer: Phone application"
     "plasma-workspace-wallpapers: A large wallpaper selection for Plasma"
 )
@@ -32,7 +32,7 @@ makedepends=(
     cmake
     extra-cmake-modules
 )
-_commit=6e4e5fc341e3b1e4f9e1044e97d0d60d609d1c49
+_commit=505757a0756f999cafe71317d98091fbb7b47e8f
 source=(
     "git+https://invent.kde.org/plasma/plasma-mobile.git#commit=$_commit"
     plasma-mobile.service

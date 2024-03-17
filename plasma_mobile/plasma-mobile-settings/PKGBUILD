@@ -25,14 +25,12 @@ makedepends=(
 )
 source=(
     kscreenlockerrc
-    startkderc
     plasmamobile.json
     powerdevil.hook
     hfd-service.txt
 )
 sha256sums=(
     a8ba8eb604185b184e46d2bfd43df12f239295dd7bfe9e6711e0e0d238b40a3b
-    bf14819bb36a95cbb465169ca3640d8a93f9a648881f9f52f6315a1ba40d273c
     42db6e099ab56aa4f6c01107fe83897a059bc371a389379cd3c260d4ab8fd2bc
     42c4de4c9310904ada1c84e23a34e42fcf20f8318a5f798372468381965dbd18
     a96e50dfe3cc8e9736b98e2f6b2d92a0987e4dfa8069db00947237e78472e4de
@@ -41,7 +39,6 @@ sha256sums=(
 package() {
     xdg=$pkgdir/etc/xdg
     install -Dm644 kscreenlockerrc $xdg/kscreenlockerrc
-    install -Dm644 startkderc $xdg/startkderc
     install -Dm644 "${srcdir}/plasmamobile.json" -t "${pkgdir}/usr/share/maliit/keyboard2/devices/"
     # install alpm hook
     install -Dm644 "${srcdir}/powerdevil.hook" "${pkgdir}/usr/share/libalpm/hooks/90-powerdevil.hook"
