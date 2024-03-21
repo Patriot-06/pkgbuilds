@@ -7,7 +7,7 @@ pkgname=(
     device-sdm845-xiaomi-beryllium-tianma
 )
 pkgver=0.5
-pkgrel=2
+pkgrel=3
 _arches=specific
 arch=(aarch64)
 license=(MIT)
@@ -61,6 +61,11 @@ EOF
 deviceinfo_modules_initfs="gpi i2c_qcom_geni qcom_pmi8998_charger qcom_fg novatek_nvt_ts"
 EOF
     fi
+
+    cat >>"$srcdir"/deviceinfo_ <<EOF
+
+deviceinfo_kernel_cmdline_append="console=tty0"
+EOF
 
     install -Dm644 "$srcdir"/deviceinfo_ "$pkgdir"/etc/kupfer/deviceinfo
 }
