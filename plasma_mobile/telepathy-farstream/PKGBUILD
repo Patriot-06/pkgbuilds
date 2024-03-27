@@ -19,7 +19,7 @@ pkgrel=8
 pkgdesc="Telepathy GLib-based client library that uses Farstream to handle Call channels"
 url="https://telepathy.freedesktop.org/components/telepathy-farstream/"
 license=('LGPL-2.1-or-later')
-arch=(x86_64)
+arch=(aarch64)
 
 # main package
 _main_package() {
