@@ -17,26 +17,16 @@ arch=(
 )
 license=(LGPL-2.1-or-later)
 url="https://telepathy.freedesktop.org/components/telepathy-farstream/"
-# main package
-_main_package() {
-  depends=(
+depends=(
     farstream
     telepathy-glib
-  )
-  makedepends=(
+)
+makedepends=(
     dbus-glib
     glib2-docs
     gobject-introspection
     gtk-doc
-  )
-
-  if [ "${_build_git::1}" != "t" ] ; then
-    _main_stable
-  else
-    _main_git
-  fi
-}
-
+)
 # stable package
 _main_stable() {
   _dl_url="http://telepathy.freedesktop.org/releases/telepathy-farstream"
