@@ -17,7 +17,6 @@ license=(LGPL)
 url="https://github.com/TelepathyQt/telepathy-qt"
 depends=(
     qt5-base
-    telepathy-farstream
 )
 makedepends=(
     cmake
