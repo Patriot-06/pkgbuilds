@@ -3,10 +3,10 @@
 # Contributor: Andrea Scarpino <andrea@archlinux.org>
 # Contributor: Ionut Biru <ibiru@archlinux.org>
 _mode=host
-_arches=all
 pkgname="telepathy-qt"
 pkgver=0.9.8
 pkgrel=3
+_arches=all
 arch=(aarch64)
 url="https://github.com/TelepathyQt/telepathy-qt"
 # url="https://telepathy.freedesktop.org/wiki/"
