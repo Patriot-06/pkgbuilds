@@ -13,8 +13,7 @@
 ## basic info
 _mode=host
 _arches=all
-_pkgname="telepathy-farstream"
-pkgname="$_pkgname${_pkgtype:-}"
+pkgname="telepathy-qt"
 pkgver=0.6.2
 pkgrel=8
 pkgdesc="Telepathy GLib-based client library that uses Farstream to handle Call channels"
@@ -45,7 +44,7 @@ _main_package() {
 # stable package
 _main_stable() {
   _dl_url="http://telepathy.freedesktop.org/releases/telepathy-farstream"
-  _pkgsrc="$_pkgname-${pkgver%%.r*}"
+  _pkgsrc="$pkgname-${pkgver%%.r*}"
   _pkgext="tar.gz"
   source+=("$_pkgsrc.$_pkgext"::"$_dl_url/$_pkgsrc.$_pkgext")
   sha256sums+=('6fa099f22d13a2a49240445a13e918928aef097675d76e5cc9f98ab496087e0a')
@@ -62,10 +61,10 @@ _main_git() {
 
   makedepends+=('git')
 
-  provides=("$_pkgname=${pkgver%%.r*}")
-  conflicts=("$_pkgname")
+  provides=("$pkgname=${pkgver%%.r*}")
+  conflicts=("$pkgname")
 
-  _pkgsrc="$_pkgname"
+  _pkgsrc="$pkgname"
   source+=("$_pkgsrc"::"git+$url.git")
   sha256sums+=('SKIP')
 

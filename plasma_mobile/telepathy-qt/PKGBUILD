@@ -4,8 +4,7 @@
 # Contributor: Ionut Biru <ibiru@archlinux.org>
 _mode=host
 _arches=all
-_pkgname="telepathy-qt"
-pkgname="$_pkgname"
+pkgname="telepathy-qt"
 pkgver=0.9.8
 pkgrel=3
 arch=(aarch64)
@@ -25,10 +24,10 @@ makedepends=(
   qt5-tools
 )
 
-_pkgsrc="$_pkgname-$pkgver"
+_pkgsrc="$pkgname-$pkgver"
 _pkgext="tar.gz"
 source=(
-  "https://telepathy.freedesktop.org/releases/$_pkgname/$_pkgsrc.$_pkgext"{,.asc}
+  "https://telepathy.freedesktop.org/releases/$pkgname/$_pkgsrc.$_pkgext"{,.asc}
 )
 sha256sums=(
   'bf8e2a09060addb80475a4938105b9b41d9e6837999b7a00e5351783857e18ad'
