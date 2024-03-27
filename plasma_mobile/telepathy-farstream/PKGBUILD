@@ -3,8 +3,6 @@
 ## useful links:
 # https://telepathy.freedesktop.org/components/telepathy-farstream/
 # https://github.com/TelepathyIM/telepathy-farstream
-
-
 ## basic info
 _mode=host
 _arches=all
