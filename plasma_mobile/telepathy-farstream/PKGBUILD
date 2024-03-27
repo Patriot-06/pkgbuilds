@@ -1,14 +1,9 @@
 # Maintainer:
 # Contributor: Ionut Biru <ibiru@archlinux.org>
-
 ## useful links:
 # https://telepathy.freedesktop.org/components/telepathy-farstream/
 # https://github.com/TelepathyIM/telepathy-farstream
 
-## options
-: ${_build_git:=false}
-
-[[ "${_build_git::1}" == "t" ]] && _pkgtype+="-git"
 
 ## basic info
 _mode=host
@@ -20,6 +15,11 @@ pkgdesc="Telepathy GLib-based client library that uses Farstream to handle Call 
 url="https://telepathy.freedesktop.org/components/telepathy-farstream/"
 license=('LGPL-2.1-or-later')
 arch=(aarch64)
+
+## options
+: ${_build_git:=false}
+
+[[ "${_build_git::1}" == "t" ]] && _pkgtype+="-git"
 
 # main package
 _main_package() {
