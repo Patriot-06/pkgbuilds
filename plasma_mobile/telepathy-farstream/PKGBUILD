@@ -17,9 +17,6 @@ arch=(
 )
 license=(LGPL-2.1-or-later)
 url="https://telepathy.freedesktop.org/components/telepathy-farstream/"
-## options
-: ${_build_git:=false}
-[[ "${_build_git::1}" == "t" ]] && _pkgtype+="-git"
 # main package
 _main_package() {
   depends=(
