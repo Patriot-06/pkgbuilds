@@ -6,14 +6,17 @@
 ## basic info
 _mode=host
 pkgname="telepathy-farstream"
+pkgdesc="Telepathy GLib-based client library that uses Farstream to handle Call channels"
 pkgver=0.6.2
 pkgrel=8
-pkgdesc="Telepathy GLib-based client library that uses Farstream to handle Call channels"
-url="https://telepathy.freedesktop.org/components/telepathy-farstream/"
-license=('LGPL-2.1-or-later')
 _arches=all
-arch=(aarch64)
-
+arch=(
+    aarch64
+    x86_64
+    armv7h
+)
+license=('LGPL-2.1-or-later')
+url="https://telepathy.freedesktop.org/components/telepathy-farstream/"
 ## options
 : ${_build_git:=false}
 
