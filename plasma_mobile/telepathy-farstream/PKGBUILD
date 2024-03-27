@@ -15,7 +15,7 @@ arch=(
     x86_64
     armv7h
 )
-license=('LGPL-2.1-or-later')
+license=(LGPL-2.1-or-later)
 url="https://telepathy.freedesktop.org/components/telepathy-farstream/"
 ## options
 : ${_build_git:=false}
