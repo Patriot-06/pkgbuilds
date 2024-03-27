@@ -16,14 +16,14 @@ arch=(
 license=(LGPL)
 url="https://github.com/TelepathyQt/telepathy-qt"
 depends=(
-  qt5-base
-  telepathy-farstream
+    qt5-base
+    telepathy-farstream
 )
 makedepends=(
-  cmake
-  doxygen
-  python
-  qt5-tools
+    cmake
+    doxygen
+    python
+    qt5-tools
 )
 
 _pkgsrc="$pkgname-$pkgver"
