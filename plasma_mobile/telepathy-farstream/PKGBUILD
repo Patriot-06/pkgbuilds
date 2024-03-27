@@ -12,6 +12,7 @@
 
 ## basic info
 _mode=host
+_arches=all
 _pkgname="telepathy-farstream"
 pkgname="$_pkgname${_pkgtype:-}"
 pkgver=0.6.2
