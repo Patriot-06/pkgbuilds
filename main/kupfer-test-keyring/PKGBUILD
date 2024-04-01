@@ -1,0 +1,32 @@
+# Maintainer: Prawn <insane.prawny@gmail.com>
+_mode=cross
+_nodeps=true
+pkgname=kupfer-test-keyring
+pkgdesc="Arch Linux ARM PGP keyring"
+pkgver=20240401
+pkgrel=1
+_arches="specific"
+arch=("any")
+license=("GPL")
+url="https://kupfer.mobi"
+depends=("pacman")
+install="${pkgname}.install"
+_keyring="kupfer-test"
+source=(
+    "${pkgname}.install"
+    "Makefile"
+    "${_keyring}.master.pgp"
+    "${_keyring}.build.pgp"
+)
+sha256sums=(
+    "577bc9cc07c30105798ed809778b28812e3fcd12c78d741591d29fcafd837e69"
+    "86fecf8e5ee01193ecd8649b0011aac6b24adfca1d9b34da577bd88b40892485"
+    "7e50efa179e3579649712a7acfdc079bb9162ed6bb074b355688bbcaef9accfa"
+    "e3d34ca206c0a916625974289afb4f6f6ca9f5a0028d0fc6eab004f10929e1be"
+)
+
+
+package() {
+    cd "${srcdir}"
+    make KEYRING_NAME="${_keyring}" BUILD_DIR="${pkgname}-${pkgver}" PREFIX=/usr DESTDIR="${pkgdir}" install
+}
