@@ -16,7 +16,7 @@ _arches=specific
 arch=(
         aarch64
         armv7
-    )
+)
 license=(MIT)
 _url=(
     https://github.com/msm8916-mainline/lk2nd
