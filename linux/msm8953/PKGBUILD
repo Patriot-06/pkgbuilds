@@ -2,7 +2,7 @@ _mode=cross
 _kernelname=msm8953
 pkgbase="linux-$_kernelname"
 _desc="Qualcomm MSM8953 kernel"
-pkgver=6.5.2
+pkgver=6.9.1
 pkgrel=1
 _arches=specific
 arch=(aarch64)
@@ -18,26 +18,31 @@ makedepends=(
     cpio
 )
 options=(!strip)
-_commit=e7797492485f14684f5575f82800d09508df2034
+_commit=a27c006e8d25e7ad54340eb4ee318dc6f8010905
+# 0652e4850e32504dc7f2b01a574f836a542293ac 6.7.5
+# 221f48d87546347f22355d1dafbb644be42ffb2b 6.8.2
+# a27c006e8d25e7ad54340eb4ee318dc6f8010905 6.9.1
+_srcname="linux-${_commit}"
 source=(
-    "linux-${_commit}.tar.gz::${url}/archive/${_commit}.tar.gz"
+    "$_srcname.tar.gz::$url/archive/$_commit.tar.gz"
     extra_config
     linux.preset
     60-linux.hook
     90-linux.hook
-    config-msm8953-ipa.aarch64
+    config-msm8953.aarch64
+    "git+https://github.com/msm8953-mainline/linux-panel-drivers.git"
 )
 sha256sums=(
-    3b0b2d550e25c26ed960a3c81675380b63165ae8f7da9354da7b40693dbcd384
+    b182003e7bb41d0d668e1b49876aba5aa26c8927694dbe0b42fed419e70274c2
     770324694413ee2491d2987586cba072cfc0e62d0a520d267bbd66acafedaa61
     66644820faa950a5fc59181f5aefcbed6d7ed652b29aee69979a2be2a032025d
     ae2e95db94ef7176207c690224169594d49445e04249d2499e9d2fbc117a0b21
     c20dce380025de175fe9a551b247b3fb05ecf068eef63e773f82b36be9568270
-    cdcf5b6d851745bbb851ac3d883aa598903c53184a9eb385fb600071f049bbd3
+    37b921a27a70139c1f619fe1e6b45c8860b42ed3a2e57ed0b40e978bd2031b30
+    SKIP
 )
 
 
-_srcname="linux-${_commit}"
 
 pkgver() {
     cd ${_srcname}
@@ -45,13 +50,38 @@ pkgver() {
 }
 
 prepare() {
-    cd ${_srcname}
-    #make defconfig msm8953.config no-unused-drivers.config xiaomi-tissot.config
-    cp "$srcdir/config-msm8953-ipa.aarch64" .config
-    cat ../extra_config >>.config
+    # add xiaomi-rosy panels
+    cd "$srcdir/linux-panel-drivers"
+    git submodule update --init
+    git fetch origin pull/10/head:rosy
+    git switch rosy
+
+    cd "$srcdir/${_srcname}"
+
+#     cp "/$srcdir/adreno_gpu.c" "./drivers/gpu/drm/msm/adreno/adreno_gpu.c"
+#     cp "/$srcdir/main.c" "./drivers/base/firmware_loader/main.c"
+#
+#     sed -i 's/dev_dbg(/dev_warn(/g' ./drivers/base/firmware_loader/main.c
+#     sed -i 's/dev_dbg(/dev_warn(/g' ./drivers/gpu/drm/msm/adreno/adreno_gpu.c
+#     sed -i 's/dev_dbg(/dev_warn(/g' ./drivers/base/firmware_loader/fallback.c
+
+    #sed -i 's/a506_zap.mdt/a506_zap.mbn/g' ./arch/arm64/boot/dts/qcom/msm8953.dtsi
+
+    # regenerate all panel drivers and enable them in config
+    bash "/$srcdir/linux-panel-drivers/generate.sh" 2&>/dev/null || true
+    for panel in $(cat ./drivers/gpu/drm/panel/msm8953-generated/Makefile |\
+            grep XIAOMI_ROSY | sed -n 's/.*(\(CONFIG_[A-Z_0-9]*\)).*/\1/p'); do
+        echo "$panel=y" > panels_rosy
+    done
+    # end
+
+    cp "$srcdir/config-msm8953.aarch64" .config
+    cat "$srcdir/extra_config" >> .config
+    cat panels_rosy >> .config
     make olddefconfig
     # don't run depmod on "make install". We'll do this ourselves in packaging
     sed -i "2iexit 0" scripts/depmod.sh
+
 }
 
 build() {
@@ -84,6 +114,8 @@ _package() {
     mkdir -p "${pkgdir}/boot/dtbs/qcom"
     cp arch/arm64/boot/dts/qcom/msm8953-*.dtb \
         "${pkgdir}/boot/dtbs/qcom"
+    cp arch/arm64/boot/dts/qcom/sdm450-*.dtb \
+        "${pkgdir}/boot/dtbs/qcom"
     cp arch/$KARCH/boot/Image.gz "${pkgdir}/boot"
 
     # make room for external modules
@@ -95,7 +127,8 @@ _package() {
         install -Dm644 /dev/stdin "${pkgdir}/usr/lib/modules/${_extramodules}/version"
 
     # remove build and source links
-    rm "${pkgdir}/usr/lib/modules/${_kernver}/"{source,build}
+    [ -e "${pkgdir}/usr/lib/modules/${_kernver}/source" ] && rm "${pkgdir}/usr/lib/modules/${_kernver}/source"
+    [ -e "${pkgdir}/usr/lib/modules/${_kernver}/build" ] && rm "${pkgdir}/usr/lib/modules/${_kernver}/build"
 
     # now we call depmod...
     depmod -b "${pkgdir}/usr" -F System.map "${_kernver}"

@@ -1,30 +1,31 @@
 _mode=cross
 _nodeps=true
-pkgname=device-msm8953-xiaomi-tissot
-pkgdesc="Xiaomi Mi A1"
-pkgver=0.6
-pkgrel=3
+pkgname=device-msm8953-xiaomi-rosy
+pkgdesc="Xiaomi Redmi 5"
+pkgver=0.5
+pkgrel=9
 _arches=specific
 arch=(aarch64)
 license=(MIT)
 makedepends=(devicepkg-helpers)
-_commit=95a9e93450e6bf89f960263aac63d5a1907cf23f
+_commit=3ed0fc4c8ccf55c81482cab1fb4aff29335bc94b
 depends=(
     device-msm8953-common
-    firmware-msm8953-xiaomi-tissot
+    firmware-msm8953-xiaomi-rosy
     msm-firmware-loader
     qbootctl
     q6voiced
+    megapixels
 )
 source=(
-    "https://gitlab.com/postmarketOS/pmaports/-/raw/${_commit}/device/community/device-xiaomi-tissot/deviceinfo"
-    "https://gitlab.com/postmarketOS/pmaports/-/raw/${_commit}/device/community/device-xiaomi-tissot/modules-initfs"
-    #xiaomi-tissot.conf
+    deviceinfo
+    modules-initfs
+    #xiaomi-rosy.conf
     machine-info
 )
 sha256sums=(
-    6ab66a8b94a3213ce6bd30894ec5ba9c0de52791371b404035f59a17a5d2ca11
-    fa0800bd5da002d4a8003ff683c9df3390500a80435d3e15bd378f49027ea505
+    e267f2aa3d93b9a307a5a243f26086bc990d61302a253f40521e2efe3ee5d13d
+    74f8eaa8387477115570a5fc1cc7d1f3a96351316edc3c91647f796be4444564
     #e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
     7729d6a89258b470cadd48cfbc704bab7791501c53f45f50737dea6b441a3171
 )
@@ -46,6 +47,6 @@ deviceinfo_modules_initfs="$(cat "$srcdir"/modules-initfs | tr '\n' ' ')"
 EOF
     install -Dm644 "$srcdir"/deviceinfo_ "$pkgdir"/etc/kupfer/deviceinfo
 
-    #install -Dm644 "$srcdir"/xiaomi-tissot.conf "$pkgdir"/etc/kupfer/mkinitcpio.conf.d/xiaomi-tissot.conf
+    #install -Dm644 "$srcdir"/xiaomi-rosy.conf "$pkgdir"/etc/kupfer/mkinitcpio.conf.d/xiaomi-rosy.conf
     install -Dm644 "$srcdir"/machine-info "$pkgdir"/etc/machine-info
 }

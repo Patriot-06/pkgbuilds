@@ -1,0 +1,61 @@
+_mode=host
+_nodeps=true
+pkgname=megapixels
+pkgdesc="The GTK camera application"
+pkgver=1.8.1.r0.g1b0f314
+pkgrel=3
+_arches=specific
+arch=(
+    aarch64
+)
+license=(MIT)
+install=$pkgname.install
+
+depends=(
+    zbar
+)
+
+makedepends=(
+    gtk4
+    zbar
+    meson
+    ninja
+    git
+    feedbackd
+    libtiff4
+)
+
+url=https://gitlab.com/megapixels-org/Megapixels
+_commit=1b0f314045a5019a2ef19f2f6b761620cd0afa72
+source=(
+    "git+$url#commit=$_commit"
+    org.postmarketos.Megapixels.gschema.xml
+)
+sha256sums=(
+    SKIP
+    f743584d85c7941b5dfb74eaac410731c4402190d718f87575cf5fde6595bd56
+)
+
+pkgver() {
+    cd "$srcdir/Megapixels"
+    git describe --long --tags --abbrev=7 "$_commit" | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
+}
+
+build() {
+    cd "$srcdir/Megapixels"
+    arch-meson build
+    ninja -C build
+}
+
+package() {
+    cd "$srcdir/Megapixels"
+    DESTDIR="$pkgdir" meson install -C build
+
+    cp -r "$srcdir/Megapixels/config" \
+        "$pkgdir/usr/share/megapixels"
+
+    # install schema
+    install -Dm755 "$srcdir/org.postmarketos.Megapixels.gschema.xml" \
+        "$pkgdir/usr/share/glib-2.0/schemas/org.postmarketos.Megapixels.gschema.xml"
+
+}

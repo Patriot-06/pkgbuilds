@@ -12,7 +12,7 @@ source=(
 sha256sums=(
     SKIP
 )
-_fwdir="/usr/lib/firmware/kupfer"
+_fwdir="/usr/lib/firmware"
 
 build() {
     echo "$pkgname needs no building!"

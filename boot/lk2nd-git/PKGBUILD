@@ -1,0 +1,112 @@
+_mode=cross
+pkgbase=boot-lk2nd-git
+pkgname=(
+    boot-lk2nd-msm8916-git
+    boot-lk2nd-msm8974-git
+    boot-lk2nd-msm8226-git
+    boot-lk2nd-msm8917-git
+    boot-lk2nd-msm8937-git
+    boot-lk2nd-land-git
+    boot-lk2nd-msm8940-git
+    boot-lk2nd-msm8953-git
+)
+pkgver=r0.ff961126
+pkgrel=2
+_arches=specific
+arch=(aarch64 armv7)
+license=(MIT)
+_url=(
+    https://github.com/msm8916-mainline/lk2nd
+    https://github.com/msm8953-mainline/lk2nd
+)
+makedepends=(
+    python
+    dtc
+    arm-none-eabi-gcc
+)
+_commit=(
+    ff96cb9ff649099dd0a1481204b17994e9568ecb
+    112631b283b2779e4a85df6afca6c2d1d7b9a7dd
+)
+source=(
+    "lk2nd-msm8916.tar.gz::${_url[0]}/archive/${_commit[0]}.tar.gz"
+    "lk2nd-msm8953.tar.gz::${_url[1]}/archive/${_commit[1]}.tar.gz"
+    working-land.patch
+)
+sha256sums=(
+    1d630311a2d0a5226b1958ab55086a2bb3e64d3ec873dcf52c793b7f95e25a6c
+    d0d81359fae360cfdc4cf83f833fcbc5d4e697e365d4a6e608e9964e1087dc36
+    21b3da06cd4e56a58bfb32ea4cf1d533f1300878545157be5469c50f8746a1f9
+)
+provides=(boot-lk2nd)
+pkgver() {
+    printf "r0.%s" "${_commit[0]:0:4}${_commit[1]:0:4}"
+}
+
+
+prepare() {
+    cd "$srcdir/lk2nd-${_commit[1]}"
+    patch -f -p 1  < ../working-land.patch || true
+}
+
+build() {
+    # CFLAGS="-Wno-error=implicit-function-declaration"
+
+    cd "$srcdir/lk2nd-${_commit[0]}"
+    make spotless
+    make TOOLCHAIN_PREFIX=arm-none-eabi- lk2nd-msm8916
+    make TOOLCHAIN_PREFIX=arm-none-eabi- lk2nd-msm8974
+    make TOOLCHAIN_PREFIX=arm-none-eabi- lk2nd-msm8226
+
+    cd "$srcdir/lk2nd-${_commit[1]}"
+    make spotless
+    make TOOLCHAIN_PREFIX=arm-none-eabi- msm8917-secondary
+    make TOOLCHAIN_PREFIX=arm-none-eabi- msm8937-secondary
+    make TOOLCHAIN_PREFIX=arm-none-eabi- land-secondary
+    make TOOLCHAIN_PREFIX=arm-none-eabi- msm8952-secondary
+    make TOOLCHAIN_PREFIX=arm-none-eabi- msm8953-secondary
+
+}
+
+package_boot-lk2nd-msm8916-git() {
+    provides+=(lk2nd-msm8916)
+    install -Dm644 "$srcdir/lk2nd-${_commit[0]}/build-lk2nd-msm8916/lk2nd.img" "${pkgdir}/boot/lk2nd.img"
+    #install -Dm644 "$srcdir/lk2nd-${_commit[0]}/build-lk2nd-msm8916/lk2nd-appended-dtb.img" "${pkgdir}/boot/lk2nd-appended-dtb.img"
+}
+
+package_boot-lk2nd-msm8974-git() {
+    provides+=(lk2nd-msm8974)
+    install -Dm644 "$srcdir/lk2nd-${_commit[0]}/build-lk2nd-msm8974/lk2nd.img" "${pkgdir}/boot/lk2nd.img"
+    #install -Dm644 "$srcdir"/lk2nd/build-lk2nd-msm8974/lk2nd-appended-dtb.img "${pkgdir}/boot/lk2nd-appended-dtb.img"
+}
+
+package_boot-lk2nd-msm8226-git() {
+    provides+=(lk2nd-msm8226)
+    install -Dm644 "$srcdir/lk2nd-${_commit[0]}/build-lk2nd-msm8226/lk2nd.img" "${pkgdir}/boot/lk2nd.img"
+}
+
+package_boot-lk2nd-msm8917-git() {
+    provides+=(lk2nd-msm8917)
+    install -Dm644 "$srcdir/lk2nd-${_commit[1]}/build-msm8917-secondary/lk2nd.img" "${pkgdir}/boot/lk2nd.img"
+}
+
+package_boot-lk2nd-msm8937-git() {
+    provides+=(lk2nd-msm8937)
+    install -Dm644 "$srcdir/lk2nd-${_commit[1]}/build-msm8937-secondary/lk2nd.img" "${pkgdir}/boot/lk2nd.img"
+}
+
+package_boot-lk2nd-land-git() {
+    provides+=(boot-lk2nd-land-git)
+    install -Dm644 "$srcdir/lk2nd-${_commit[1]}/build-land-secondary/lk2nd.img" "${pkgdir}/boot/lk2nd.img"
+}
+
+
+package_boot-lk2nd-msm8940-git() {
+    provides+=(lk2nd-msm8940)
+    install -Dm644 "$srcdir/lk2nd-${_commit[1]}/build-msm8952-secondary/lk2nd.img" "${pkgdir}/boot/lk2nd.img"
+}
+
+package_boot-lk2nd-msm8953-git() {
+    provides+=(lk2nd-msm8953)
+    install -Dm644 "$srcdir/lk2nd-${_commit[1]}/build-msm8953-secondary/lk2nd.img" "${pkgdir}/boot/lk2nd.img"
+}
