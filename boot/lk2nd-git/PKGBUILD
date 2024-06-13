@@ -16,7 +16,7 @@ _arches=specific
 arch=(
         aarch64
         armv7
-    )
+)
 license=(MIT)
 _url=(
     https://github.com/msm8916-mainline/lk2nd
@@ -26,10 +26,6 @@ makedepends=(
     python
     dtc
     arm-none-eabi-gcc
-)
-_commit=(
-    ff96cb9ff649099dd0a1481204b17994e9568ecb
-    112631b283b2779e4a85df6afca6c2d1d7b9a7dd
 )
 source=(
     "lk2nd-msm8916.tar.gz::${_url[0]}/archive/${_commit[0]}.tar.gz"
@@ -41,7 +37,12 @@ sha256sums=(
     d0d81359fae360cfdc4cf83f833fcbc5d4e697e365d4a6e608e9964e1087dc36
     21b3da06cd4e56a58bfb32ea4cf1d533f1300878545157be5469c50f8746a1f9
 )
+_commit=(
+    ff96cb9ff649099dd0a1481204b17994e9568ecb
+    112631b283b2779e4a85df6afca6c2d1d7b9a7dd
+)
 provides=(boot-lk2nd)
+
 pkgver() {
     printf "r0.%s" "${_commit[0]:0:4}${_commit[1]:0:4}"
 }
