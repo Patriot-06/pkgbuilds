@@ -1,0 +1,33 @@
+_mode=cross
+pkgname=firmware-msm8953-xiaomi-rosy
+pkgver=0.3
+pkgrel=1
+_arches=specific
+arch=(aarch64)
+license=(custom:Proprietary)
+options=(!strip)
+source=(
+    "git+https://github.com/comradeFreeman/firmware-xiaomi-rosy"
+)
+
+sha256sums=(
+    SKIP
+)
+_fwdir="/usr/lib/firmware"
+
+build() {
+    echo "$pkgname needs no building!"
+}
+
+package() {
+    cd "$srcdir/firmware-xiaomi-rosy"
+    install -Dm644 a506_zap.mdt -t "$pkgdir/$_fwdir"
+    install -Dm644 a506_zap.b02 -t "$pkgdir/$_fwdir"
+
+    # On my device Wi-Fi blobs loaded by msm-firmware-loader from partition don't work, so I replace symlinks to them by blobs from mido
+    # cd "$srcdir/firmware-xiaomi-rosy" # rosy
+    # mkdir -p "$pkgdir/$_fwdir/msm-firmware-loader/target"
+    # for f in $(find . -regextype posix-extended -regex '\.\/(w[cl]|W).*'); do
+    #    ln -sf $f "$pkgdir/$_fwdir/msm-firmware-loader/target"
+    # done
+}

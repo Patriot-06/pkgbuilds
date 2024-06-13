@@ -30,8 +30,8 @@ package() {
     ###cd "$srcdir/firmware-xiaomi-tissot/lib/firmware/postmarketos"
     cd "$srcdir/proprietary_firmware_mido/firmware"
     
-    install -Dm644 a506_zap.mdt -t "$pkgdir/$_fwdir"/kupfer
-    install -Dm644 a506_zap.b02 -t "$pkgdir/$_fwdir"/kupfer
+    install -Dm644 a506_zap.mdt -t "$pkgdir/$_fwdir"
+    install -Dm644 a506_zap.b02 -t "$pkgdir/$_fwdir"
     
     install -Dm644 a530_pfp.fw -t "$pkgdir/$_fwdir"/qcom
     install -Dm644 a530_pm4.fw -t "$pkgdir/$_fwdir"/qcom

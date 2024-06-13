@@ -3,7 +3,7 @@ _nodeps=true
 pkgname=device-msm8953-common
 pkgdesc="Common package for Qualcomm MSM8953 devices"
 pkgver=0.5
-pkgrel=1
+pkgrel=7
 _arches=specific
 arch=(aarch64)
 license=(MIT)
@@ -26,14 +26,16 @@ source=(
     "https://gitlab.com/postmarketOS/pmaports/-/raw/${_pmos_commit}/device/community/soc-qcom-msm8953/90-feedbackd-pm8xxx-vib.rules"
     "https://gitlab.com/postmarketOS/pmaports/-/raw/${_pmos_commit}/device/community/soc-qcom-msm8953/q6voiced.conf"
     "git+https://github.com/msm8953-mainline/alsa-ucm-conf.git/#commit=$_ucm_commit"
-    51-custom.lua
+    51-custom.conf
+	adreno-a506-quirks.sh
 )
 sha256sums=(
-    93624e7a003659b9af9cc4bf2c8f3b027ff3cb74af11f820ade88ef53415cab6
+    98201c2c49a49b2b00978b09de7215021187b7b18731be7552258fb00f3c43bf
     5ad4650f48fab20e4d93dfde00687e10048a0e426a745ede313168f02e31367c
     21b8395e7729c785c0446be5d88e52873b0fa46812111b91bcd5c3af7dde24da
     SKIP
-    5e19f243756046ef88e33155f398dcaf637bf67914d18122040ce7ae604c284f
+    fca89a0e80a959ce3ebdae0790cb30b531385140162d910b64ecf2b79a6925bb
+    ae2dc1656891a9b50e43c1f3fc3d1103bc929a38b70dcc8305238aba38a487ca
 )
 
 package() {
@@ -42,6 +44,7 @@ package() {
     # taken from pmos:
     install -Dm644 "$srcdir"/90-feedbackd-pm8xxx-vib.rules "$pkgdir"/usr/lib/udev/rules.d/90-feedbackd-pm8xxx-vib.rules
     install -Dm644 "$srcdir"/q6voiced.conf "$pkgdir"/etc/conf.d/q6voiced
+    install -Dm644 "$srcdir"/adreno-a506-quirks.sh "$pkgdir"/etc/profile.d/adreno-a506-quirks.sh
 
     # alsa ucm config
     cd "$srcdir"/alsa-ucm-conf
@@ -54,6 +57,19 @@ package() {
 
     # pipewire low volume and crackling fix
     # taken from here: https://gitlab.freedesktop.org/pipewire/pipewire/-/issues/3193
-    install -Dm644 "$srcdir"/51-custom.lua "$pkgdir"/usr/share/wireplumber/main.lua.d/51-custom.lua
+    # upd 04.2024: since wireplumber 0.5 it should be formatted in SPA-JSON format and placed at neighbor directory
 
+    # before wirepulmber 0.5
+    # install -Dm644 "$srcdir"/51-custom.lua "$pkgdir"/usr/share/wireplumber/main.lua.d/51-custom.lua
+
+    # wireplumber 0.5
+    install -Dm644 "$srcdir"/51-custom.conf "$pkgdir"/usr/share/wireplumber/wireplumber.conf.d/51-custom.conf
+
+    # Could not activate connection: not authorized to control networking
+    mkdir -p "$pkgdir"/etc/NetworkManager/conf.d
+    cat >>"$pkgdir"/etc/NetworkManager/conf.d/any-user.conf <<EOF
+
+[main]
+auth-polkit=false
+EOF
 }

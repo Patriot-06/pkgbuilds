@@ -3,29 +3,30 @@ _nodeps=true
 pkgname=device-msm8953-xiaomi-mido
 pkgdesc="Xiaomi Redmi Note 4"
 pkgver=0.5
-pkgrel=2
+pkgrel=3
 _arches=specific
 arch=(aarch64)
 license=(MIT)
 makedepends=(devicepkg-helpers)
-_commit=fa6150b289438cb26c98915a39f569255b391303
+_commit=3ed0fc4c8ccf55c81482cab1fb4aff29335bc94b
 depends=(
     device-msm8953-common
     firmware-msm8953-xiaomi-mido
     msm-firmware-loader
     qbootctl
     q6voiced
+    megapixels
 )
 source=(
     "https://gitlab.com/postmarketOS/pmaports/-/raw/${_commit}/device/community/device-xiaomi-mido/deviceinfo"
     "https://gitlab.com/postmarketOS/pmaports/-/raw/${_commit}/device/community/device-xiaomi-mido/modules-initfs"
-    xiaomi-mido.conf
+    #xiaomi-mido.conf
     machine-info
 )
 sha256sums=(
     5bb6486875b6b957ba0d95e9faaf952251bf300ea659712d71e98c7d1968286b
-    e0ede279f855d08fe1787eef6497703832bf38c33f98c7a2de2537ae98d9c8f2
-    e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    fc08f52709f393db5b15cee15233753c742c70514af0da440bf183171f93cf13
+    #e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
     7729d6a89258b470cadd48cfbc704bab7791501c53f45f50737dea6b441a3171
 )
 
@@ -46,6 +47,6 @@ deviceinfo_modules_initfs="$(cat "$srcdir"/modules-initfs | tr '\n' ' ')"
 EOF
     install -Dm644 "$srcdir"/deviceinfo_ "$pkgdir"/etc/kupfer/deviceinfo
 
-    install -Dm644 "$srcdir"/xiaomi-mido.conf "$pkgdir"/etc/kupfer/mkinitcpio.conf.d/xiaomi-mido.conf
+    #install -Dm644 "$srcdir"/xiaomi-mido.conf "$pkgdir"/etc/kupfer/mkinitcpio.conf.d/xiaomi-mido.conf
     install -Dm644 "$srcdir"/machine-info "$pkgdir"/etc/machine-info
 }
