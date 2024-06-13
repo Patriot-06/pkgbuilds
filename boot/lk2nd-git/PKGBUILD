@@ -32,7 +32,6 @@ _commit=(
     ff96cb9ff649099dd0a1481204b17994e9568ecb
     112631b283b2779e4a85df6afca6c2d1d7b9a7dd
 )
-
 source=(
     "lk2nd-msm8916.tar.gz::${_url[0]}/archive/${_commit[0]}.tar.gz"
     "lk2nd-msm8953.tar.gz::${_url[1]}/archive/${_commit[1]}.tar.gz"
@@ -47,7 +46,6 @@ sha256sums=(
 pkgver() {
     printf "r0.%s" "${_commit[0]:0:4}${_commit[1]:0:4}"
 }
-
 
 prepare() {
     cd "$srcdir/lk2nd-${_commit[1]}"
