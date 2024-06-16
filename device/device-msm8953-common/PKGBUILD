@@ -3,7 +3,7 @@ _nodeps=true
 pkgname=device-msm8953-common
 pkgdesc="Common package for Qualcomm MSM8953 devices"
 pkgver=0.5
-pkgrel=7
+pkgrel=8
 _arches=specific
 arch=(aarch64)
 license=(MIT)
@@ -19,8 +19,8 @@ depends=(
     meta-modem-qcom
     q6voiced
 )
-_ucm_commit=01b9629916bd51e47481b97a29a0078bb6a72aec
-_pmos_commit=fa6150b289438cb26c98915a39f569255b391303
+_ucm_commit=b6860eae577ddea6f55834850fb4ed403f208d2f
+_pmos_commit=dfee3e43658f45720f92a922255a41040ce99821
 source=(
     msm8953-common.conf
     "https://gitlab.com/postmarketOS/pmaports/-/raw/${_pmos_commit}/device/community/soc-qcom-msm8953/90-feedbackd-pm8xxx-vib.rules"

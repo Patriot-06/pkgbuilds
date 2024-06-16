@@ -2,8 +2,8 @@ _mode=host
 _nodeps=true
 pkgname=megapixels
 pkgdesc="The GTK camera application"
-pkgver=1.8.1.r0.g1b0f314
-pkgrel=3
+pkgver=1.8.2.r1.g60d9072
+pkgrel=1
 _arches=specific
 arch=(
     aarch64
@@ -26,7 +26,7 @@ makedepends=(
 )
 
 url=https://gitlab.com/megapixels-org/Megapixels
-_commit=1b0f314045a5019a2ef19f2f6b761620cd0afa72
+_commit=60d9072deddd4f6743fafd7b7ecbea8b18133fe5
 source=(
     "git+$url#commit=$_commit"
     org.postmarketos.Megapixels.gschema.xml
