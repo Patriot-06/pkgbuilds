@@ -27,7 +27,7 @@ source=(
     "https://gitlab.com/postmarketOS/pmaports/-/raw/${_pmos_commit}/device/community/soc-qcom-msm8953/q6voiced.conf"
     "git+https://github.com/msm8953-mainline/alsa-ucm-conf.git/#commit=$_ucm_commit"
     51-custom.conf
-	adreno-a506-quirks.sh
+    adreno-a506-quirks.sh
 )
 sha256sums=(
     98201c2c49a49b2b00978b09de7215021187b7b18731be7552258fb00f3c43bf

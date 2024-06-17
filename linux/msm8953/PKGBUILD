@@ -8,7 +8,6 @@ _arches=specific
 arch=(aarch64)
 license=(GPL2)
 url=https://github.com/msm8953-mainline/linux
-pmaports=https://gitlab.com/postmarketOS/pmaports/-/raw/master
 makedepends=(
     xmlto
     docbook-xsl
@@ -30,7 +29,7 @@ source=(
     linux.preset
     60-linux.hook
     90-linux.hook
-    "$pmaports/device/community/linux-postmarketos-qcom-msm8953/config-postmarketos-qcom-msm8953.aarch64"
+    "https://gitlab.com/postmarketOS/pmaports/-/raw/master/device/community/linux-postmarketos-qcom-msm8953/config-postmarketos-qcom-msm8953.aarch64"
     #"git+https://github.com/msm8953-mainline/linux-panel-drivers.git"
 )
 sha256sums=(
@@ -42,8 +41,6 @@ sha256sums=(
     23c7a4c0780d16014a7b5619b64830b49d5398c7c42f805584cee6d28d8d1391
     #SKIP
 )
-
-
 
 pkgver() {
     cd ${_srcname}
