@@ -1,11 +1,11 @@
 [Unit]
+DefaultDependencies=no
 Description=Firmware Unpacker
-Before=rmtfs.service
-After=boot.mount
+Before=systemd-udevd.service
 
 [Service]
 Type=simple
 ExecStart=/usr/bin/msm-firmware-loader-unpack.sh
 
 [Install]
-WantedBy=default.target
+WantedBy=sysinit.target

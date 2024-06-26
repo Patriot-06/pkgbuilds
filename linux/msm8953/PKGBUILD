@@ -30,7 +30,6 @@ source=(
     60-linux.hook
     90-linux.hook
     "https://gitlab.com/postmarketOS/pmaports/-/raw/master/device/community/linux-postmarketos-qcom-msm8953/config-postmarketos-qcom-msm8953.aarch64"
-    #"git+https://github.com/msm8953-mainline/linux-panel-drivers.git"
 )
 sha256sums=(
     b182003e7bb41d0d668e1b49876aba5aa26c8927694dbe0b42fed419e70274c2
@@ -48,34 +47,9 @@ pkgver() {
 }
 
 prepare() {
-    # add xiaomi-rosy panels
-#     cd "$srcdir/linux-panel-drivers"
-#     git submodule update --init
-#     git fetch origin pull/10/head:rosy
-#     git switch rosy
-
     cd "$srcdir/${_srcname}"
-
-#     cp "/$srcdir/adreno_gpu.c" "./drivers/gpu/drm/msm/adreno/adreno_gpu.c"
-#     cp "/$srcdir/main.c" "./drivers/base/firmware_loader/main.c"
-#
-#     sed -i 's/dev_dbg(/dev_warn(/g' ./drivers/base/firmware_loader/main.c
-#     sed -i 's/dev_dbg(/dev_warn(/g' ./drivers/gpu/drm/msm/adreno/adreno_gpu.c
-#     sed -i 's/dev_dbg(/dev_warn(/g' ./drivers/base/firmware_loader/fallback.c
-#
-#     sed -i 's/a506_zap.mdt/a506_zap.mbn/g' ./arch/arm64/boot/dts/qcom/msm8953.dtsi
-
-    # regenerate all panel drivers and enable them in config
-#     bash "/$srcdir/linux-panel-drivers/generate.sh" 2&>/dev/null || true
-#     for panel in $(cat ./drivers/gpu/drm/panel/msm8953-generated/Makefile |\
-#             grep XIAOMI_ROSY | sed -n 's/.*(\(CONFIG_[A-Z_0-9]*\)).*/\1/p'); do
-#         echo "$panel=y" > panels_rosy
-#     done
-    # end
-
     cp "$srcdir/config-postmarketos-qcom-msm8953.aarch64" .config
     cat "$srcdir/extra_config" >> .config
-    #cat panels_rosy >> .config
     make olddefconfig
     # don't run depmod on "make install". We'll do this ourselves in packaging
     sed -i "2iexit 0" scripts/depmod.sh

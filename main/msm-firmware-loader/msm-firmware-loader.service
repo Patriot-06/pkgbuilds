@@ -1,6 +1,7 @@
 [Unit]
+DefaultDependencies=no
 Description=MSM Firmware Loader and Activator
-Before=rmtfs.service
+Before=systemd-udevd.service
 Requires=msm-firmware-loader-unpack.service
 
 [Service]
@@ -9,4 +10,4 @@ ExecStart=/usr/bin/msm-firmware-loader.sh
 ExecStart=/usr/bin/remoteproc-reloader.sh start
 
 [Install]
-WantedBy=default.target
+WantedBy=sysinit.target
