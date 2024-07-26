@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# Original by: Danct12 <danct12@disroot.org>
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+build() {
+    local mod
+
+    add_module "dm-crypt"
+    if [[ $CRYPTO_MODULES ]]; then
+        for mod in $CRYPTO_MODULES; do
+            add_module "$mod"
+        done
+    else
+        add_all_modules "/crypto/"
+    fi
+
+    add_binary "cryptsetup"
+    add_binary "dmsetup"
+    add_binary "udevadm"
+    add_full_dir "/usr/lib/udev/rules.d"
+    add_full_dir "/usr/lib/initcpio/udev"
+    add_full_dir "/etc/udev/rules.d"
+    add_file "/usr/lib/initcpio/hooks/kupfer-functions.sh"
+    add_binary "/usr/bin/unl0kr"
+    add_file "/etc/unl0kr.conf"
+    add_full_dir "/etc/unl0kr.conf.d"
+    add_full_dir "/usr/share/libinput"
+    add_full_dir "/usr/share/X11/xkb"
+
+    add_runscript
+}
+
+help() {
+    cat <<HELPEOF
+This hook loads unl0kr to decrypt the filesystem.
+HELPEOF
+}
+
+# vim: set ft=sh ts=4 sw=4 et:
