@@ -2,8 +2,8 @@ _mode=cross
 _nodeps=true
 pkgname=mkinitcpio-kupfer
 pkgdesc="Modular initramfs image creation utility"
-pkgver=38.1
-pkgrel=1
+pkgver=39.2
+pkgrel=2
 _arches=all
 arch=(
     aarch64
@@ -54,20 +54,23 @@ makedepends=(asciidoc)
 backup=(etc/mkinitcpio.conf)
 install=mkinitcpio.install
 source=(
-    "https://sources.archlinux.org/other/mkinitcpio/mkinitcpio-$pkgver.tar.gz"
+    "https://sources.archlinux.org/other/mkinitcpio/mkinitcpio-$pkgver.tar.xz"
+    0001-trigger.patch
     0001-use-gzip-for-compression-by-default.patch
     0002-functions-handle-gzip-compressed-kernels-in-kver_gen.patch
     0003-check-for-ALARM-kernels-in-run_post_hooks.patch
 )
 sha256sums=(
-    5c63525097a3c17bfb654dacea71ed7681c3102a3684d18c319d06e57007e1cd
-    9d749b05168e7c75fa6bfc7477c48b42e61a8e05552605a4bbd93f7c1cac0ae9
-    47422ce3ca8601020ebe5b5f5d6f15231e730feae5d6c237e0c3d5451a2bba72
-    9c6c3c2e053c94729439aa9f3383690b72b0c647441aab64108ef82fb3532476
+    bc37195fab724c42e154a93e6ab797410161c07f223302898673c0e17afd8e0a
+    cbe7082584c244fb2999f962def02b87f02bed4405f595d51e46833bf610fb7b
+    a325e7136836d77cdb86cada0eb5efa4283b9723c9bf598ffea01e607cec254e
+    c68191e3e82f4773d8212a9fcabb7d888f4b4ae5ea404a133d5207dd3c52e14f
+    1ef97c46a65d10fae98e2b791ff798f626cd8de4f72d4500689954c253cf67fe
 )
 
 prepare() {
     cd mkinitcpio-$pkgver
+    patch -p1 -i ../0001-trigger.patch
     patch -p1 -i ../0001-use-gzip-for-compression-by-default.patch
     patch -p1 -i ../0002-functions-handle-gzip-compressed-kernels-in-kver_gen.patch
     patch -p1 -i ../0003-check-for-ALARM-kernels-in-run_post_hooks.patch
