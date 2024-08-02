@@ -24,6 +24,7 @@ makedepends=(
     dtc
     arm-none-eabi-gcc
 )
+_commit=whocreatedthisstupidformattingcheckernahui?
 _commit8916=6d8312b89f9308149ca4e70c799b19bcfd40a1cf
 _commit8953=112631b283b2779e4a85df6afca6c2d1d7b9a7dd
 source=(
