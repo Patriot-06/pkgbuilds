@@ -2,7 +2,7 @@ _mode=cross
 _nodeps=true
 pkgname=device-sdm845-oneplus-fajita
 pkgver=0.4
-pkgrel=1
+pkgrel=2
 _arches=specific
 arch=(aarch64)
 license=(MIT)
@@ -27,6 +27,8 @@ package() {
     cat >>"$srcdir"/deviceinfo_ <<EOF
 
 deviceinfo_partitions_data="/dev/sda17"
+
+deviceinfo_kernel_cmdline_append="console=tty0"
 EOF
     install -Dm644 "$srcdir"/deviceinfo_ "$pkgdir"/etc/kupfer/deviceinfo
 }

@@ -3,7 +3,7 @@ _nodeps=true
 pkgname=device-sdm670-google-sargo
 pkgdesc="Google Pixel 3a"
 pkgver=0.1
-pkgrel=1
+pkgrel=2
 _arches=specific
 arch=(aarch64)
 license=(MIT)
@@ -44,6 +44,8 @@ package() {
 
 deviceinfo_partitions_data="/dev/mmcblk0p72"
 deviceinfo_modules_initfs="$(cat "$srcdir"/modules-initfs | tr '\n' ' ')"
+
+deviceinfo_kernel_cmdline_append="console=tty0"
 EOF
     install -Dm644 "$srcdir"/deviceinfo_ "$pkgdir"/etc/kupfer/deviceinfo
 }
