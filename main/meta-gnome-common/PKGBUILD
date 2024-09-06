@@ -3,7 +3,7 @@ _nodeps=true
 pkgname=meta-gnome-common
 pkgdesc="Common metapackage for the GNOME shell"
 pkgver=1.0
-pkgrel=5
+pkgrel=6
 _arches=all
 arch=(
     x86_64
@@ -15,14 +15,11 @@ depends=(
     meta-gnome-minimal-common
     archlinux-appstream-data
     baobab
-    cheese
-    eog
     evince
     file-roller
     firefox
     firefox-libinput-config
     firefox-wayland-config
-    gedit
     gnome-backgrounds
     gnome-books
     gnome-calculator
@@ -36,11 +33,11 @@ depends=(
     gnome-logs
     gnome-maps
     gnome-menus
-    gnome-photos
     gnome-remote-desktop
     gnome-shell-extensions
     gnome-software
     gnome-system-monitor
+    gnome-text-editor
     gnome-tweaks
     gnome-user-docs
     gnome-user-share
@@ -49,23 +46,29 @@ depends=(
     grilo-plugins
     gvfs
     gvfs-afc
+    gvfs-dnssd
     gvfs-goa
     gvfs-google
     gvfs-gphoto2
     gvfs-mtp
     gvfs-nfs
+    gvfs-onedrive
     gvfs-smb
+    gvfs-wsdd
     lollypop
+    loupe
     malcontent
     mutter
     nautilus
     orca
     rygel
     simple-scan
+    snapshot
     sushi
+    tecla
     totem
     tracker3-miners
-    vino
+    xdg-desktop-portal-gnome
     xdg-user-dirs-gtk
     yelp
 )
