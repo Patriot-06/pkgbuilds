@@ -15,7 +15,6 @@ depends=(
     msm-firmware-loader
     qbootctl
     q6voiced
-    megapixels
 )
 source=(
     deviceinfo
