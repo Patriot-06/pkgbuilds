@@ -1,6 +1,6 @@
 _mode=cross
 pkgname=firmware-msm8953-xiaomi-rosy
-pkgver=0.3
+pkgver=0.5
 pkgrel=1
 _arches=specific
 arch=(aarch64)

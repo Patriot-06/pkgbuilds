@@ -2,8 +2,8 @@ _mode=cross
 _nodeps=true
 pkgname=device-msm8953-common
 pkgdesc="Common package for Qualcomm MSM8953 devices"
-pkgver=0.5
-pkgrel=8
+pkgver=0.6
+pkgrel=1
 _arches=specific
 arch=(aarch64)
 license=(MIT)
@@ -18,16 +18,18 @@ depends=(
     boot-android-common
     meta-modem-qcom
     q6voiced
+    msm-firmware-loader
 )
-_ucm_commit=b6860eae577ddea6f55834850fb4ed403f208d2f
-_pmos_commit=dfee3e43658f45720f92a922255a41040ce99821
+_ucm_commit=f6dfc9b072e74b0ab2afcf452bc106242049ef28
+_pmos_commit=897dd2b8320c02acdfcf2c30c7013f7baea9b604
 source=(
     msm8953-common.conf
     "https://gitlab.com/postmarketOS/pmaports/-/raw/${_pmos_commit}/device/community/soc-qcom-msm8953/90-feedbackd-pm8xxx-vib.rules"
     "https://gitlab.com/postmarketOS/pmaports/-/raw/${_pmos_commit}/device/community/soc-qcom-msm8953/q6voiced.conf"
     "git+https://github.com/msm8953-mainline/alsa-ucm-conf.git/#commit=$_ucm_commit"
-    51-custom.conf
+    51-soundfix.conf
     adreno-a506-quirks.sh
+    msm8953_callaudio.lst
 )
 sha256sums=(
     98201c2c49a49b2b00978b09de7215021187b7b18731be7552258fb00f3c43bf
@@ -36,6 +38,7 @@ sha256sums=(
     SKIP
     0d1675f4ff950591a5a51b21280edbd86c820783c8609833dbde86f9769014ce
     ae2dc1656891a9b50e43c1f3fc3d1103bc929a38b70dcc8305238aba38a487ca
+    4891a7c232524d0385b760e1f44375a7772f8e2e6c70568dbd5415df3384a568
 )
 
 package() {
@@ -45,6 +48,9 @@ package() {
     install -Dm644 "$srcdir"/90-feedbackd-pm8xxx-vib.rules "$pkgdir"/usr/lib/udev/rules.d/90-feedbackd-pm8xxx-vib.rules
     install -Dm644 "$srcdir"/q6voiced.conf "$pkgdir"/etc/conf.d/q6voiced
     install -Dm644 "$srcdir"/adreno-a506-quirks.sh "$pkgdir"/etc/profile.d/adreno-a506-quirks.sh
+
+    # enable q6voiced via kupfer-config
+    install -Dm644 "$srcdir"/msm8953_callaudio.lst "$pkgdir"/etc/kupfer/systemd/user/msm8953_callaudio.lst
 
     # alsa ucm config
     cd "$srcdir"/alsa-ucm-conf
@@ -60,10 +66,10 @@ package() {
     # upd 04.2024: since wireplumber 0.5 it should be formatted in SPA-JSON format and placed at neighbor directory
 
     # before wirepulmber 0.5
-    # install -Dm644 "$srcdir"/51-custom.lua "$pkgdir"/usr/share/wireplumber/main.lua.d/51-custom.lua
+    # install -Dm644 "$srcdir"/51-soundfix.lua "$pkgdir"/usr/share/wireplumber/main.lua.d/51-soundfix.lua
 
     # wireplumber 0.5
-    install -Dm644 "$srcdir"/51-custom.conf "$pkgdir"/usr/share/wireplumber/wireplumber.conf.d/51-custom.conf
+    install -Dm644 "$srcdir"/51-soundfix.conf "$pkgdir"/usr/share/wireplumber/wireplumber.conf.d/51-soundfix.conf
 
     # Could not activate connection: not authorized to control networking
     mkdir -p "$pkgdir"/etc/NetworkManager/conf.d

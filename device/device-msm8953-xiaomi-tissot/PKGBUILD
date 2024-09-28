@@ -3,16 +3,15 @@ _nodeps=true
 pkgname=device-msm8953-xiaomi-tissot
 pkgdesc="Xiaomi Mi A1"
 pkgver=0.6
-pkgrel=3
+pkgrel=1
 _arches=specific
 arch=(aarch64)
 license=(MIT)
 makedepends=(devicepkg-helpers)
-_commit=95a9e93450e6bf89f960263aac63d5a1907cf23f
+_commit=897dd2b8320c02acdfcf2c30c7013f7baea9b604
 depends=(
     device-msm8953-common
     firmware-msm8953-xiaomi-tissot
-    msm-firmware-loader
     qbootctl
     q6voiced
 )
@@ -23,7 +22,7 @@ source=(
     machine-info
 )
 sha256sums=(
-    6ab66a8b94a3213ce6bd30894ec5ba9c0de52791371b404035f59a17a5d2ca11
+    dd6d8f84c9d9b117fd50e79e3ba8bb7f16cf8495f543080bcacd4503de725936
     fa0800bd5da002d4a8003ff683c9df3390500a80435d3e15bd378f49027ea505
     #e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
     7729d6a89258b470cadd48cfbc704bab7791501c53f45f50737dea6b441a3171

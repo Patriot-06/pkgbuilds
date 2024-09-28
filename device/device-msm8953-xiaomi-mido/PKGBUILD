@@ -2,17 +2,16 @@ _mode=cross
 _nodeps=true
 pkgname=device-msm8953-xiaomi-mido
 pkgdesc="Xiaomi Redmi Note 4"
-pkgver=0.5
-pkgrel=3
+pkgver=0.6
+pkgrel=1
 _arches=specific
 arch=(aarch64)
 license=(MIT)
 makedepends=(devicepkg-helpers)
-_commit=3ed0fc4c8ccf55c81482cab1fb4aff29335bc94b
+_commit=897dd2b8320c02acdfcf2c30c7013f7baea9b604
 depends=(
     device-msm8953-common
     firmware-msm8953-xiaomi-mido
-    msm-firmware-loader
     qbootctl
     q6voiced
 )
@@ -23,7 +22,7 @@ source=(
     machine-info
 )
 sha256sums=(
-    5bb6486875b6b957ba0d95e9faaf952251bf300ea659712d71e98c7d1968286b
+    bbd8af3cccdfab770a57a59900ee1a45b0f15c6e6e88cc07bd52333d7739580b
     fc08f52709f393db5b15cee15233753c742c70514af0da440bf183171f93cf13
     #e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
     7729d6a89258b470cadd48cfbc704bab7791501c53f45f50737dea6b441a3171

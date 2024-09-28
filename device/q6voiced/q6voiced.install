@@ -1,3 +1,0 @@
-post_install() {
-    systemctl --global enable q6voiced.service
-}

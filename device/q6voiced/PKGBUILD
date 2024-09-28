@@ -6,7 +6,6 @@ pkgrel=1
 _arches=specific
 arch=(aarch64)
 license=(GPL2)
-install=$pkgname.install
 
 depends=(
     systemd
@@ -14,7 +13,7 @@ depends=(
     dbus
 )
 url=https://gitlab.com/postmarketOS/q6voiced
-_commit=736138bfc9f7b455a96679e2d67fd922a8f16464
+_commit=a75518e1ddf44971b1181e12c328dd250b62962a
 source=(
     q6voiced.service
     "git+$url#commit=$_commit"
@@ -44,7 +43,6 @@ options=(
 )
 
 
-
 build() {
     gcc -o $srcdir/q6voiced/q6voiced $srcdir/q6voiced/q6voiced.c -I/usr/include/dbus-1.0/ \
         -I/usr/lib/dbus-1.0/include -ltinyalsa -ldbus-1
@@ -52,8 +50,6 @@ build() {
 
 
 package() {
-
-  install -Dm755 "$srcdir"/q6voiced/q6voiced "$pkgdir"/usr/bin/q6voiced
-  install -Dm644 "$srcdir"/q6voiced.service "$pkgdir"/usr/lib/systemd/user/q6voiced.service
-
+    install -Dm755 "$srcdir"/q6voiced/q6voiced "$pkgdir"/usr/bin/q6voiced
+    install -Dm644 "$srcdir"/q6voiced.service "$pkgdir"/usr/lib/systemd/user/q6voiced.service
 }

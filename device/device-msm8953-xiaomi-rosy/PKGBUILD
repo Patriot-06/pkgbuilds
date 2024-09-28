@@ -2,29 +2,28 @@ _mode=cross
 _nodeps=true
 pkgname=device-msm8953-xiaomi-rosy
 pkgdesc="Xiaomi Redmi 5"
-pkgver=0.5
-pkgrel=9
+pkgver=0.6
+pkgrel=1
 _arches=specific
 arch=(aarch64)
 license=(MIT)
 makedepends=(devicepkg-helpers)
-_commit=3ed0fc4c8ccf55c81482cab1fb4aff29335bc94b
+_commit=897dd2b8320c02acdfcf2c30c7013f7baea9b604
 depends=(
     device-msm8953-common
     firmware-msm8953-xiaomi-rosy
-    msm-firmware-loader
     qbootctl
     q6voiced
 )
 source=(
-    deviceinfo
-    modules-initfs
+    "https://gitlab.com/postmarketOS/pmaports/-/raw/${_commit}/device/testing/device-xiaomi-rosy/deviceinfo"
+    "https://gitlab.com/postmarketOS/pmaports/-/raw/${_commit}/device/testing/device-xiaomi-rosy/modules-initfs"
     #xiaomi-rosy.conf
     machine-info
 )
 sha256sums=(
-    e267f2aa3d93b9a307a5a243f26086bc990d61302a253f40521e2efe3ee5d13d
-    74f8eaa8387477115570a5fc1cc7d1f3a96351316edc3c91647f796be4444564
+    420d4351615f96b56926f6910f68f18645f8a705f9221629eef8599b10802eea
+    13cbba6b2e79ad0d1b60eecb549afc5f15f321f19a63479b83a500d72fb9af55
     #e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
     7729d6a89258b470cadd48cfbc704bab7791501c53f45f50737dea6b441a3171
 )

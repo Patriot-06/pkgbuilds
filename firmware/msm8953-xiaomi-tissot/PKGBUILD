@@ -1,6 +1,6 @@
 _mode=cross
 pkgname=firmware-msm8953-xiaomi-tissot
-pkgver=0.1
+pkgver=0.5
 pkgrel=1
 _arches=specific
 arch=(aarch64)
@@ -27,7 +27,6 @@ build() {
 }
 
 package() {
-    ###cd "$srcdir/firmware-xiaomi-tissot/lib/firmware/postmarketos"
     cd "$srcdir/proprietary_firmware_mido/firmware"
     
     install -Dm644 a506_zap.mdt -t "$pkgdir/$_fwdir"
