@@ -5,8 +5,8 @@
 _mode=host
 pkgname=plasma-dialer
 pkgdesc="Phone Dialer for Plasma Mobile"
-pkgver=23.01.0.r0.g0eb7343
-pkgrel=2
+pkgver=24.08.0.r0.g87e321b
+pkgrel=1
 _arches=all
 arch=(
     x86_64
@@ -16,30 +16,26 @@ arch=(
 license=(GPL-3.0-or-later)
 depends=(
     desktop-file-utils
-    kcontacts5
-    modemmanager-qt5
-    kpeople5
-    telepathy-qt
+    kcontacts
+    modemmanager-qt
+    kpeople
     libphonenumber
-    kdbusaddons5
-    kirigami-addons5
-    knotifications5
-    telepathy-mission-control
-    pulseaudio-qt
-    kio5
-    qt5-declarative
-    qt5-feedback
-    qt5-quickcontrols2
+    kdbusaddons
+    kirigami-addons
+    knotifications
+    ki18n
+    kio
+    qt6-declarative
     qtmpris
     callaudiod
-    plasma-wayland-protocols
 )
 makedepends=(
     cmake
     extra-cmake-modules
-    kdoctools5
+    kdoctools
+    plasma-wayland-protocols
 )
-_commit=0eb7343125c472dd842d2b049332bc5086624acf
+_commit=87e321b7e347346fbce4ac92c4c99539079f92cb
 source=(
     "git+https://invent.kde.org/plasma-mobile/plasma-dialer.git#commit=$_commit"
 )
