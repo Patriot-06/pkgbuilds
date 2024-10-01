@@ -6,3 +6,4 @@
 #
 # https://gitlab.gnome.org/GNOME/gtk/-/issues/6576
 export GSK_RENDERER=gl
+export QT_ENABLE_GLYPH_CACHE_WORKAROUND=1

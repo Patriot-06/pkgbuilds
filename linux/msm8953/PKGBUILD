@@ -2,7 +2,7 @@ _mode=cross
 _kernelname=msm8953
 pkgbase="linux-$_kernelname"
 _desc="Qualcomm MSM8953 kernel"
-pkgver=6.10.0
+pkgver=6.11.0
 pkgrel=1
 _arches=specific
 arch=(aarch64)
@@ -18,7 +18,12 @@ makedepends=(
     cpio
 )
 options=(!strip)
-_commit=45eae58d35da2f22ae9c63d4b0038d0d3faf879d
+_commit=f65b2691e635e22da05ded3c41a31f2c35670030
+# 0652e4850e32504dc7f2b01a574f836a542293ac 6.7.5
+# 221f48d87546347f22355d1dafbb644be42ffb2b 6.8.2
+# a27c006e8d25e7ad54340eb4ee318dc6f8010905 6.9.1
+# 45eae58d35da2f22ae9c63d4b0038d0d3faf879d 6.10
+# f65b2691e635e22da05ded3c41a31f2c35670030 6.11.0-rc2
 _srcname="linux-${_commit}"
 source=(
     "$_srcname.tar.gz::$url/archive/$_commit.tar.gz"
@@ -26,15 +31,15 @@ source=(
     linux.preset
     60-linux.hook
     90-linux.hook
-    "https://gitlab.com/postmarketOS/pmaports/-/raw/master/device/community/linux-postmarketos-qcom-msm8953/config-postmarketos-qcom-msm8953.aarch64"
+    config-postmarketos-qcom-msm8953.aarch64
 )
 sha256sums=(
-    76ecbbb4b2af32c4f6d7754fbe6d5f6a190360342c726ee9cf077108fd6047b0
+    869fd944496299c5c7e2ff6c7d7185adb60de2173ffeb574800952cbfb4f2b02
     770324694413ee2491d2987586cba072cfc0e62d0a520d267bbd66acafedaa61
     66644820faa950a5fc59181f5aefcbed6d7ed652b29aee69979a2be2a032025d
     ae2e95db94ef7176207c690224169594d49445e04249d2499e9d2fbc117a0b21
     c20dce380025de175fe9a551b247b3fb05ecf068eef63e773f82b36be9568270
-    5cbf9cf6acb4406fafc478e08939ca4ce3a557bf923dce07c23b342420fe2bd5
+    70b506c48db2a5615680969a8f7f075e7087817bfc43c4d55879f67012c4d487
 )
 
 pkgver() {

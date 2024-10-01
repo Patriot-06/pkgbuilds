@@ -3,7 +3,7 @@ _nodeps=true
 pkgname=device-msm8953-common
 pkgdesc="Common package for Qualcomm MSM8953 devices"
 pkgver=0.6
-pkgrel=1
+pkgrel=2
 _arches=specific
 arch=(aarch64)
 license=(MIT)
@@ -37,7 +37,7 @@ sha256sums=(
     21b8395e7729c785c0446be5d88e52873b0fa46812111b91bcd5c3af7dde24da
     SKIP
     0d1675f4ff950591a5a51b21280edbd86c820783c8609833dbde86f9769014ce
-    ae2dc1656891a9b50e43c1f3fc3d1103bc929a38b70dcc8305238aba38a487ca
+    54d6d3d16d4110a6116f5a09810a06f2381a5e6512833d18343edb882098f7d6
     4891a7c232524d0385b760e1f44375a7772f8e2e6c70568dbd5415df3384a568
 )
 
