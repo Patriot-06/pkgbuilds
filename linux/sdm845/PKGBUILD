@@ -2,7 +2,7 @@ _mode=cross
 _kernelname=sdm845
 pkgbase="linux-$_kernelname"
 _desc="Qualcomm SDM845 kernel"
-pkgver=6.9.0
+pkgver=6.11.0
 pkgrel=1
 _arches=specific
 arch=(aarch64)
@@ -18,20 +18,22 @@ makedepends=(
     cpio
 )
 options=(!strip)
-_commit=d31fb0e5cdcb61ae23ab78762093ba05e10744bf
+_commit=2fa43795f607c67020ac78662e12ecb89a9d737c
 source=(
     "linux-${_commit}.tar.gz::${url}/-/archive/${_commit}.tar.gz"
     extra_config
     linux.preset
     60-linux.hook
     90-linux.hook
+    config-postmarketos-qcom-sdm845.aarch64
 )
 sha256sums=(
-    7f58be7d51950f302c97cc69cd73bbb2245c4349d6ccc7782db61a1ae80b5819
+    1d03c83005902cd28297d12dd6293b5d34ee7095597531e9afc9dc08d5da6271
     770324694413ee2491d2987586cba072cfc0e62d0a520d267bbd66acafedaa61
     66644820faa950a5fc59181f5aefcbed6d7ed652b29aee69979a2be2a032025d
     ae2e95db94ef7176207c690224169594d49445e04249d2499e9d2fbc117a0b21
     c20dce380025de175fe9a551b247b3fb05ecf068eef63e773f82b36be9568270
+    da0d27dda55922a7b3332ebefaeb175f7e110ffba037ff8f0027b2558efeb354
 )
 
 _srcname="linux-${_commit}"
@@ -44,7 +46,7 @@ pkgver() {
 prepare() {
     cd ${_srcname}
 
-    make defconfig sdm845.config
+    cp ../config-postmarketos-qcom-sdm845.aarch64 .config
     cat ../extra_config >>.config
     make olddefconfig
 
@@ -56,7 +58,7 @@ build() {
     cd ${_srcname}
     unset LDFLAGS
     # shellcheck disable=SC2086
-    make ${MAKEFLAGS} Image.gz modules
+    make ${MAKEFLAGS} Image Image.gz modules
     # shellcheck disable=SC2086
     make ${MAKEFLAGS} DTC_FLAGS="-@" dtbs
 }
@@ -85,7 +87,7 @@ _package() {
         arch/arm64/boot/dts/qcom/sdm845-oneplus-enchilada.dtb \
         arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dtb \
         "${pkgdir}/boot/dtbs/qcom"
-    cp arch/$KARCH/boot/Image.gz "${pkgdir}/boot"
+    cp arch/$KARCH/boot/Image{,.gz} "${pkgdir}/boot"
 
     # make room for external modules
     local _extramodules="extramodules-${_basekernel}${_kernelname}"
