@@ -1,0 +1,58 @@
+_mode=host
+_crossdirect=false
+pkgname=fbkeyboard
+pkgdesc="Framebuffer softkeyboard for use on devices with touchscreen input like smartphones"
+pkgver=0.4.r0.g03d3845
+pkgrel=1
+_arches=specific
+arch=(
+    x86_64
+    aarch64
+)
+license=(GPL-3.0-or-later)
+url=https://github.com/bakonyiferenc/fbkeyboard
+depends=(
+    freetype2
+    ttf-dejavu
+)
+makedepends=(
+    linux-headers
+    freetype2
+)
+_commit=03d3845af0403f4b036347f6b894b9e8ee4d1e02
+source=(
+    "git+https://github.com/bakonyiferenc/fbkeyboard.git#commit=$_commit"
+    fbkeyboard.service
+    getty@.service.override
+    clear.sh
+    clear.csh
+)
+sha256sums=(
+    SKIP
+    1795c3a7f3132d83ade96f6e37d436d7b36c70dfdd5accebe02d8617096a8765
+    287442113c602f3046d5d4ce0f417908bc633f2388701c085364c6de823a1acb
+    2215b13dbd1bb79ff735c0280ce27f0ca3c66b6a621493589d9d7ce7f1de9a84
+    ebba8806bf4ba88d5f6cc4af702dddeda27e22eb044b00e62b87ba7df6534e82
+)
+
+pkgver() {
+   cd "$srcdir/$pkgname"
+   git describe --long --abbrev=7 --tags "$_commit" | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
+}
+
+build() {
+    cd "$srcdir/$pkgname"
+    make
+}
+
+package() {
+    cd "$srcdir/$pkgname"
+    install -Dm755 fbkeyboard "$pkgdir"/usr/bin/fbkeyboard
+
+    install -Dm644 fbkeyboard.1 "$pkgdir"/usr/share/man/man1/fbkeyboard.1
+
+    install -Dm644 "$srcdir"/clear.* -t "$pkgdir"/etc/profile.d/
+
+    install -Dm644 "$srcdir"/fbkeyboard.service "$pkgdir"/usr/lib/systemd/system/fbkeyboard.service
+    install -Dm644 "$srcdir"/getty\@.service.override "$pkgdir"/usr/lib/systemd/system/getty\@.service.d/override.conf
+}
