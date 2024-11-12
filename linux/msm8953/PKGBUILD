@@ -2,7 +2,7 @@ _mode=cross
 _kernelname=msm8953
 pkgbase="linux-$_kernelname"
 _desc="Qualcomm MSM8953 kernel"
-pkgver=6.11.0
+pkgver=6.11.1
 pkgrel=1
 _arches=specific
 arch=(aarch64)
@@ -18,28 +18,24 @@ makedepends=(
     cpio
 )
 options=(!strip)
-_commit=f65b2691e635e22da05ded3c41a31f2c35670030
-# 0652e4850e32504dc7f2b01a574f836a542293ac 6.7.5
-# 221f48d87546347f22355d1dafbb644be42ffb2b 6.8.2
-# a27c006e8d25e7ad54340eb4ee318dc6f8010905 6.9.1
-# 45eae58d35da2f22ae9c63d4b0038d0d3faf879d 6.10
-# f65b2691e635e22da05ded3c41a31f2c35670030 6.11.0-rc2
+_commit=14a138983ef95bb37069f2adf710104cd11b0614
+_pmos_commit=0738399936bb123ef6236b2448b2cf3d92cb61f6
 _srcname="linux-${_commit}"
 source=(
     "$_srcname.tar.gz::$url/archive/$_commit.tar.gz"
+    "https://gitlab.postmarketos.org/postmarketOS/pmaports/-/raw/${_pmos_commit}/device/community/linux-postmarketos-qcom-msm8953/config-postmarketos-qcom-msm8953.aarch64"
     extra_config
     linux.preset
     60-linux.hook
     90-linux.hook
-    config-postmarketos-qcom-msm8953.aarch64
 )
 sha256sums=(
-    869fd944496299c5c7e2ff6c7d7185adb60de2173ffeb574800952cbfb4f2b02
+    88274ebb6cadb564df18939200c252f6e03751287aa8defb36cd31ba0d48b73e
+    aa1f95cf00de6101634381f71d94c3f956651367889510186ef153b6918ba25a
     770324694413ee2491d2987586cba072cfc0e62d0a520d267bbd66acafedaa61
     66644820faa950a5fc59181f5aefcbed6d7ed652b29aee69979a2be2a032025d
     ae2e95db94ef7176207c690224169594d49445e04249d2499e9d2fbc117a0b21
     c20dce380025de175fe9a551b247b3fb05ecf068eef63e773f82b36be9568270
-    70b506c48db2a5615680969a8f7f075e7087817bfc43c4d55879f67012c4d487
 )
 
 pkgver() {
@@ -61,7 +57,7 @@ build() {
     cd ${_srcname}
     unset LDFLAGS
     # shellcheck disable=SC2086
-    make ${MAKEFLAGS} Image.gz modules
+    make ${MAKEFLAGS} Image Image.gz modules
     # shellcheck disable=SC2086
     make ${MAKEFLAGS} DTC_FLAGS="-@" dtbs
 }
@@ -89,7 +85,7 @@ _package() {
         "${pkgdir}/boot/dtbs/qcom"
     cp arch/arm64/boot/dts/qcom/sdm450-*.dtb \
         "${pkgdir}/boot/dtbs/qcom"
-    cp arch/$KARCH/boot/Image.gz "${pkgdir}/boot"
+    cp arch/$KARCH/boot/Image{,.gz} "${pkgdir}/boot"
 
     # make room for external modules
     local _extramodules="extramodules-${_basekernel}${_kernelname}"

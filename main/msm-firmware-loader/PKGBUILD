@@ -3,7 +3,7 @@ _nodeps=true
 pkgname=msm-firmware-loader
 pkgdesc="Set of init services to automatically load firmware from device partitions"
 pkgver=1.5.0
-pkgrel=2
+pkgrel=1
 _arches=specific
 arch=(
     aarch64
@@ -13,7 +13,7 @@ arch=(
 license=(MIT)
 
 source=(
-    https://gitlab.com/postmarketOS/msm-firmware-loader/-/archive/$pkgver/msm-firmware-loader-$pkgver.tar.gz
+    "https://gitlab.postmarketos.org/postmarketOS/msm-firmware-loader/-/archive/$pkgver/msm-firmware-loader-$pkgver.tar.gz"
     msm-firmware-loader.service
     msm-firmware-loader-unpack.service
     remoteproc-reloader.sh
