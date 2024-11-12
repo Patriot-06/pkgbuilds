@@ -2,7 +2,7 @@
 _mode=host
 pkgname=plasma-mobile
 pkgdesc="Plasma Mobile shell components."
-pkgver=6.1.5.r0.ge877514
+pkgver=6.2.3.r0.g8d0f002
 pkgrel=1
 _arches=all
 arch=(
@@ -32,7 +32,7 @@ makedepends=(
     cmake
     extra-cmake-modules
 )
-_commit=e87751417583370f81bb907f4ad4e2d9185073df
+_commit=8d0f00289d5c428a5fb57ee4a8c704073b7ef12c
 source=(
     "git+https://invent.kde.org/plasma/plasma-mobile.git#commit=$_commit"
     plasma-mobile.service

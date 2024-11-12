@@ -2,7 +2,7 @@
 _mode=host
 pkgname=plasma-nano
 pkgdesc="A minimal plasma shell package intended for embedded devices."
-pkgver=6.1.5.r0.g73b4bc9
+pkgver=6.2.3.r0.g56279ff
 pkgrel=1
 _arches=all
 arch=(
@@ -18,7 +18,7 @@ makedepends=(
     cmake
     extra-cmake-modules
 )
-_commit=73b4bc90595f567ec98f8850af6483e1d143f334
+_commit=56279ffdd2f4f6fdacf17e03507fbc361b202889
 source=(
     "git+https://invent.kde.org/plasma/plasma-nano.git#commit=$_commit"
 )
