@@ -1,13 +1,14 @@
 _mode=cross
 pkgname=firmware-msm8953-xiaomi-mido
-pkgver=0.5
+pkgver=0.1
 pkgrel=1
 _arches=specific
 arch=(aarch64)
 license=(custom:Proprietary)
 options=(!strip)
+_commit=bc001cbb255a0ded2b58af07b93f712cd9322483
 source=(
-    "git+https://github.com/Kiciuk/proprietary_firmware_mido"
+    "git+https://github.com/Kiciuk/proprietary_firmware_mido#commit=$_commit"
 )
 sha256sums=(
     SKIP
