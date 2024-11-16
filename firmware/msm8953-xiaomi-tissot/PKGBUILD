@@ -20,7 +20,7 @@ sha256sums=(
 
 # default pmos gpu blobs from tissot repo are bullshit and don't work
 # mido gpu blobs are used instead
-_fwdir="/usr/lib/firmware"
+_fwdir="/usr/lib/firmware/qcom/msm8953/xiaomi/tissot"
 
 build() {
     echo "$pkgname needs no building!"

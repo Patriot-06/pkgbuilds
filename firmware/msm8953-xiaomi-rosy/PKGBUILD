@@ -13,7 +13,7 @@ source=(
 sha256sums=(
     SKIP
 )
-_fwdir="/usr/lib/firmware"
+_fwdir="/usr/lib/firmware/qcom/msm8953/samsung/a6plte"
 
 build() {
     echo "$pkgname needs no building!"
