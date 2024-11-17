@@ -18,7 +18,7 @@ makedepends=(
     cpio
 )
 options=(!strip)
-_commit=e4273c33e85256046bea6fda6f0d086b90abc8fb
+_commit=cf4698d31016f210f9e00b0eca4dbe96274faec5
 _pmos_commit=3dcc08f4a9a913ba239690935b94bc35f25f2354
 _srcname="linux-${_commit}"
 source=(
@@ -30,7 +30,7 @@ source=(
     90-linux.hook
 )
 sha256sums=(
-    85319507893719b4b6c03e6db13e83d743e854a30912cc6ced3b55c219bb6c8a
+    bae07460c45769a3250b0a19b298060681946532d381f429022b312c95e2bb16
     5fe729a101d5dccdaae6ad2235cd5f30055255bbe393d00a4f5cc153ede52e80
     770324694413ee2491d2987586cba072cfc0e62d0a520d267bbd66acafedaa61
     66644820faa950a5fc59181f5aefcbed6d7ed652b29aee69979a2be2a032025d
