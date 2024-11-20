@@ -1,0 +1,85 @@
+# Original PKGBUILD Maintainer: Adam Thiede <me@adamthiede.com>
+# https://github.com/elagost/Pine64-Arch
+# Kupfer: Syboxez
+_mode=host
+pkgname=buffyboard
+pkgver=3.2.0.r0.gedeb5e4
+pkgrel=1
+_arches=all
+arch=(
+    x86_64
+    aarch64
+)
+license=(GPL3)
+url=https://gitlab.com/postmarketOS/buffybox
+depends=(
+    libinih
+    libinput
+)
+makedepends=(
+    binutils
+    cmake
+    gcc
+    meson
+    libinput
+    libxkbcommon
+    linux-headers
+    udev
+)
+
+pkgdesc="Touch-enabled framebuffer keyboard (not only) for vampire slayers"
+
+_buffy_commit=edeb5e4a35494ab2bec7e6215fe86594ea4628ec
+_lv_drivers_commit=b8d2a18459ea585e6029ae756295c122569287df
+
+source=(
+    "git+https://gitlab.com/postmarketOS/buffybox.git#commit=${_buffy_commit}"
+    "git+https://github.com/calebccff/lv_drivers.git#commit=${_lv_drivers_commit}"
+    buffyboard.service
+    buffyboard-hooks.sh
+    buffyboard-install.sh
+    getty@.service.override
+    clear.sh
+    clear.csh
+)
+
+sha256sums=(
+    SKIP
+    SKIP
+    cfbd5cfb3f48e8c9a062ea301864f4768a598aed2564b9f004a27821206d059f
+    c3db6f3346e070896973caa0acbd2ccc9c486280dcf25ee1d7a3e67b78beb741
+    2412039bf61ac4d7be7cb96077bac72df94e7ca98f17df3c772b05b109000e19
+    287442113c602f3046d5d4ce0f417908bc633f2388701c085364c6de823a1acb
+    6da281333df7e07657e0b1a57a305e6d7ded3af086797eaf80f77496e5a20120
+    0f36a43702ab0907a57730ad3af3e53dd3d0997bcc8abf37d87bb55695e83926
+)
+
+pkgver() {
+    cd "$srcdir"/buffybox
+    git describe --long --tags --abbrev=7 "$_buffy_commit" | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
+}
+
+build() {
+    mkdir -p "${srcdir}/buffybox/lv_drivers"
+    cp -af "${srcdir}/lv_drivers"/* "${srcdir}/buffybox/lv_drivers/"
+
+    cd "${srcdir}/buffybox"
+    git submodule update --init --recursive
+
+    cd "${srcdir}/buffybox/buffyboard"
+    arch-meson _build
+    meson compile -C _build
+}
+
+package() {
+    cd "${srcdir}/buffybox/buffyboard"
+    DESTDIR="$pkgdir" meson install --no-rebuild -C _build
+    
+    install -Dm644 "${srcdir}/buffyboard.service" "${pkgdir}/usr/lib/systemd/system/buffyboard.service"
+    install -Dm644 "${srcdir}/buffyboard-hooks.sh" "${pkgdir}/usr/lib/initcpio/hooks/buffyboard"
+    install -Dm644 "${srcdir}/buffyboard-install.sh" "${pkgdir}/usr/lib/initcpio/install/buffyboard"
+
+    install -Dm644 "${srcdir}"/clear.* -t "${pkgdir}"/etc/profile.d/
+
+    install -Dm644 "$srcdir"/getty\@.service.override "$pkgdir"/usr/lib/systemd/system/getty\@.service.d/override.conf
+}
