@@ -1,0 +1,13 @@
+[Unit]
+Description=Framebuffer softkeyboard for use on devices with touchscreen input like smartphones
+After=getty@.service
+
+[Service]
+Type=idle
+Environment=(TERM=xterm-256color)
+ExecStartPre=usr/bin/clear > /dev/tty1
+ExecStart=/usr/bin/bash -c "fbkeyboard -r $(cat /sys/class/graphics/fbcon/rotate) -f /usr/share/fonts/TTF/DejaVuSans.ttf"
+PIDFile=/run/fbkeyboard.pid
+
+[Install]
+WantedBy=getty.target
