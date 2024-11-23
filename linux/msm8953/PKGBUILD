@@ -57,7 +57,7 @@ build() {
     cd ${_srcname}
     unset LDFLAGS
     # shellcheck disable=SC2086
-    make ${MAKEFLAGS} Image Image.gz modules
+    make ${MAKEFLAGS} Image.gz modules
     # shellcheck disable=SC2086
     make ${MAKEFLAGS} DTC_FLAGS="-@" dtbs
 }
@@ -85,7 +85,7 @@ _package() {
         "${pkgdir}/boot/dtbs/qcom"
     cp arch/arm64/boot/dts/qcom/sdm450-*.dtb \
         "${pkgdir}/boot/dtbs/qcom"
-    cp arch/$KARCH/boot/Image{,.gz} "${pkgdir}/boot"
+    cp arch/$KARCH/boot/Image.gz "${pkgdir}/boot"
 
     # make room for external modules
     local _extramodules="extramodules-${_basekernel}${_kernelname}"
