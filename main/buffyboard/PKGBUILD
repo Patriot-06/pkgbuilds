@@ -1,0 +1,66 @@
+# Original PKGBUILD Maintainer: Adam Thiede <me@adamthiede.com>
+# https://github.com/elagost/Pine64-Arch
+# Kupfer: Syboxez
+_mode=host
+pkgname=buffyboard
+pkgver=0.2.0
+pkgrel=1
+_arches=all
+arch=(
+    x86_64
+    aarch64
+)
+license=(GPL3)
+url=https://gitlab.com/cherrypicker/buffyboard
+depends=(libinput)
+makedepends=(
+    meson
+    libinput
+    libxkbcommon
+    linux-headers
+    udev
+)
+
+pkgdesc="Touch-enabled framebuffer keyboard (not only) for vampire slayers"
+
+_buffy_commit=c8f58b3413fce14da71af455f5fb20c93d83e3e1
+_lv_drivers_commit="33983bcb0a9bfd0a4cf44dba67617b9f537e76f3"
+_lvgl_commit="a2b555e096f7d401b5d8e877a6b5e81ff81c747a"
+_squeek2lvgl_commit="e3ce01bc38020b21bc61844fa1fed1a4f41097c5"
+
+source=(
+    "git+https://gitlab.com/cherrypicker/buffyboard.git#commit=${_buffy_commit}"
+    "git+https://github.com/lvgl/lv_drivers.git#commit=${_lv_drivers_commit}"
+    "git+https://github.com/lvgl/lvgl.git#commit=${_lvgl_commit}"
+    "git+https://gitlab.com/cherrypicker/squeek2lvgl.git#commit=${_squeek2lvgl_commit}"
+    buffyboard.service
+    buffyboard-hooks.sh
+    buffyboard-install.sh
+)
+
+sha256sums=(
+    SKIP
+    SKIP
+    SKIP
+    SKIP
+    6c33356aef34ec89d388aa9fa470d8a63392e0caca49a76e4577ce0dbc2bc9d0
+    c3db6f3346e070896973caa0acbd2ccc9c486280dcf25ee1d7a3e67b78beb741
+    2412039bf61ac4d7be7cb96077bac72df94e7ca98f17df3c772b05b109000e19
+)
+
+build() {
+    mkdir -p "${srcdir}/${pkgname}/lvgl" "${srcdir}/${pkgname}/lv_drivers" "${srcdir}/${pkgname}/squeek2lvgl"
+    mv "${srcdir}/lvgl/"* "${srcdir}/${pkgname}/lvgl"
+    mv "${srcdir}/lv_drivers/"* "${srcdir}/${pkgname}/lv_drivers"
+    mv "${srcdir}/squeek2lvgl/"* "${srcdir}/${pkgname}/squeek2lvgl"
+    arch-meson ${pkgname} _build
+    meson compile -C _build
+}
+
+package() {
+    DESTDIR=${pkgdir} meson install --no-rebuild -C _build
+    
+    install -Dm644 buffyboard.service ${pkgdir}/usr/lib/systemd/system/buffyboard.service
+    install -Dm644 buffyboard-hooks.sh ${pkgdir}/usr/lib/initcpio/hooks/buffyboard
+    install -Dm644 buffyboard-install.sh ${pkgdir}/usr/lib/initcpio/install/buffyboard
+}
