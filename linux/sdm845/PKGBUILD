@@ -3,7 +3,7 @@ _kernelname=sdm845
 pkgbase="linux-$_kernelname"
 _desc="Qualcomm SDM845 kernel"
 pkgver=6.11.0
-pkgrel=1
+pkgrel=2
 _arches=specific
 arch=(aarch64)
 license=(GPL2)
@@ -25,6 +25,7 @@ source=(
     linux.preset
     60-linux.hook
     90-linux.hook
+    garbage.config
 )
 sha256sums=(
     1d03c83005902cd28297d12dd6293b5d34ee7095597531e9afc9dc08d5da6271
@@ -32,6 +33,7 @@ sha256sums=(
     66644820faa950a5fc59181f5aefcbed6d7ed652b29aee69979a2be2a032025d
     ae2e95db94ef7176207c690224169594d49445e04249d2499e9d2fbc117a0b21
     c20dce380025de175fe9a551b247b3fb05ecf068eef63e773f82b36be9568270
+    SKIP
 )
 
 _srcname="linux-${_commit}"
@@ -44,8 +46,9 @@ pkgver() {
 prepare() {
     cd ${_srcname}
 
-    make defconfig sdm845.config
+    cp ../garbage.config .config
     cat ../extra_config >>.config
+    cat arch/arm64/configs/sdm845.config >> .config
     make olddefconfig
 
     # don't run depmod on "make install". We'll do this ourselves in packaging
