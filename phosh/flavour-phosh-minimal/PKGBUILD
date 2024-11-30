@@ -17,6 +17,7 @@ depends=(
     phosh-osk-stub
     meta-gnome-minimal-common
     gnome-calls
+    purism-chatty
 )
 source=(
     phosh.lst
