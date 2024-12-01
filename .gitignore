@@ -7,3 +7,10 @@ prebuilts*
 .srcinfo_initialised.json
 .srcinfo_meta.json
 .SRCINFO
+
+*.kate-swp
+
+gnome_mobile/gnome-settings-daemon-mobile/
+device/device-msm8916-common/
+
+megapixels/
