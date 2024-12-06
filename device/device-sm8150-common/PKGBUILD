@@ -1,0 +1,59 @@
+_mode=cross
+_nodeps=true
+pkgname=device-sm8150-common
+pkgdesc="Common package for Qualcomm SM8150 devices"
+pkgver=0.1
+pkgrel=1
+_arches=specific
+arch=(aarch64)
+license=(MIT)
+provides=(alsa-ucm-conf)
+conflicts=(alsa-ucm-conf)
+depends=(
+    linux-firmware-qcom
+    linux-sm8150
+    pd-mapper-git
+    qrtr-git
+    rmtfs-git
+    tqftpserv-git
+    boot-android-common
+    bootmac
+)
+_ucm_commit=53f3949f794fd6e0ca816c8ed82cdf2d254645cf
+_pmos_commit=9c178c75a0c0af8efd6d0a801e747339393e29bf
+source=(
+    sm8150-common.conf
+    sm8150.lst
+    bootmac-bt.lst
+    alsa-restore.service.override
+    "https://gitlab.postmarketos.org/postmarketOS/pmaports/-/raw/${_pmos_commit}/device/testing/device-realme-x3/51-qcom-sm8150.lua"
+    "git+https://gitlab.com/Patriot-06/alsa-ucm-conf/#commit=$_ucm_commit"
+)
+sha256sums=(77f53a94533b8815e97921360adae77bd2232e7765861d92eb37db22ee3d5030
+            b6834f1eb597cf5846ce730f52d3b24b4b3eaca66388d2b8611d1ca5e37dbdf5
+            05bfc075fa627d4cee84275e81100319259f0c414727c868909d3f685ef1eaf3
+            6a86566df76ba9dd6651353c00a9cdb2c253bbd88b580a6c8acb04b3f97f8c87
+            8271f9b524d21e3e8cd4772eefa45f7da35543d4d51fd885c2c841a496d86d7e
+            SKIP
+)
+
+package() {
+    install -Dm644 "$srcdir"/sm8150-common.conf "$pkgdir"/etc/kupfer/mkinitcpio.conf.d/sm8150-common.conf
+    install -Dm644 "$srcdir"/sm8150.lst "$pkgdir"/etc/kupfer/systemd/sm8150.lst
+    install -Dm644 "$srcdir"/bootmac-bt.lst "$pkgdir"/etc/kupfer/systemd/bootmac-bt.lst
+
+    # temporary alsa-restore workaround for broken audio on sm8150
+    install -Dm644 "$srcdir"/alsa-restore.service.override "$pkgdir"/usr/lib/systemd/system/alsa-restore.service.d/sm8150-fix.conf
+
+    # taken from pmos:
+    install -Dm644 "$srcdir"/51-qcom-sm8150.lua "$pkgdir"/usr/share/wireplumber/wireplumber.conf.d/51-qcom-sm8150.lua
+
+    # alsa ucm config
+    cd "$srcdir"/alsa-ucm-conf
+    export alsadir="${pkgdir}/usr/share/alsa/"
+    find ucm2 -type f -iname "*.conf" -exec install -vDm 644 {} "$alsadir"{} \;
+    find ucm2 -type l -iname "*.conf" -exec bash -c 'install -vdm 755 "${alsadir}$(dirname "{}")" && cp -dv "{}" "${alsadir}{}"' \;
+    install -vDm 644 LICENSE -t "$pkgdir/usr/share/licenses/$pkgname"
+    install -vDm 644 README.md -t "$pkgdir/usr/share/doc/$pkgname"
+    install -vDm 644 ucm2/README.md -t "$pkgdir/usr/share/doc/$pkgname/ucm2"
+}

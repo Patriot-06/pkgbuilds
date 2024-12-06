@@ -1,0 +1,19 @@
+_mode=cross
+pkgname=firmware-sm8150-realme-x3
+pkgver=0.1
+pkgrel=1
+_arches=specific
+arch=(aarch64)
+license=(custom:Proprietary)
+options=(!strip)
+_commit=aaf5e6713d7dd678515f5f06a916c97171a76ed9
+source=(
+    "git+https://github.com/Patriot-06/firmware-realme-x3#commit=${_commit}"
+)
+sha256sums=(
+    SKIP
+)
+
+package() {
+    cp -avf "$srcdir"/firmware-realme-x3/* "$pkgdir"/
+}
